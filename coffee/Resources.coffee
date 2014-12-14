@@ -50,6 +50,7 @@ res =
 	score_board: "res/score_board.png"
 	font: "res/font.png"
 	font_fnt: "res/font.fnt"
+	weixin_arrow: "res/weixin_arrow.png"
 
 
 g_resources = []
@@ -109,5 +110,6 @@ g_gameScene = [
 	res.share_btn,
 	res.score_board,
 	res.font,
-	res.font_fnt
+	res.font_fnt,
+	res.weixin_arrow
 ]

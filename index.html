@@ -25,6 +25,55 @@
 <body style="padding:0; margin: 0; background: #000;">
 <canvas id="gameCanvas" width="640" height="1136"></canvas>
 <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
+<script src="src/libs/WeixinApi.js"></script>
 <script src="main.js"></script>
+<script type="text/javascript">
+// 微信分享的数据
+window.wxData = {
+    "appId": "", // 服务号可以填写appId
+    "imgUrl":'http://jsgame.anzhuoshangdian.com/xyt/res/icon.jpg',
+    "link":'http://jsgame.anzhuoshangdian.com/xyt/',
+    "desc":"冲啊小色块，不要撞破头哦~~~",
+    "title":"空降小色块~~~"
+};
+
+function share(m, score){
+    if(m == 0){
+        document.title = window.wxData.desc = "我在玩空降小色块~~~";
+    }
+    if(m == 1){
+        document.title = window.wxData.desc = "我成功超度了"+score+"块小色块，阿尼陀佛!";
+    }
+};
+
+WeixinApi.ready(function(Api) {
+
+    // 分享的回调
+    var wxCallbacks = {
+        ready : function() {
+
+        },
+
+        cancel : function(resp) {
+
+        },
+        fail : function(resp) {
+
+        },
+        confirm : function(resp) {
+
+        },
+        all : function(resp) {
+
+        }
+    };
+
+    Api.shareToFriend(wxData, wxCallbacks);
+
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    Api.shareToWeibo(wxData, wxCallbacks);
+});
+</script>
 </body>
 </html>

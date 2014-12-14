@@ -110,6 +110,10 @@ GameLayer = BaseLayer.extend
 		shareBtn.setPressedActionEnabled true
 		shareBtn.x = @_winSize.width * 0.7
 		shareBtn.y = -shareBtn.getContentSize().height/2
+		shareBtn.addTouchEventListener (sender, type)=>
+			@addChild new ShareUI(), 100
+			share(0)
+		, @
 		@addChild shareBtn, 5
 
 

@@ -110,6 +110,12 @@ GameLayer = BaseLayer.extend({
     shareBtn.setPressedActionEnabled(true);
     shareBtn.x = this._winSize.width * 0.7;
     shareBtn.y = -shareBtn.getContentSize().height / 2;
+    shareBtn.addTouchEventListener((function(_this) {
+      return function(sender, type) {
+        _this.addChild(new ShareUI(), 100);
+        return share(0);
+      };
+    })(this), this);
     return this.addChild(shareBtn, 5);
   },
   touch: function() {
