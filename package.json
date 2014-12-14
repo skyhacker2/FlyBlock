@@ -1,0 +1,26 @@
+{
+  "name": "FlyBlock",
+  "version": "0.0.1",
+  "description": "色块游戏",
+  "main": "main.js",
+  "scripts": {
+    "test": "/usr/bin/python \"/Users/eleven/projects/cocos2d-js-v3.1/tools/cocos2d-console/bin/cocos.py\" run -s \"/Users/eleven/projects/cocos2d-js-projects/FlyBlock\" -p web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skyhacker2/FlyBlock"
+  },
+  "author": "Eleven Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skyhacker2/FlyBlock/issues"
+  },
+  "homepage": "https://github.com/skyhacker2/FlyBlock",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-coffee": "^2.2.0",
+    "gulp-util": "^3.0.1",
+    "del": "^1.1.0",
+    "gulp-copy": "0.0.2"
+  }
+}

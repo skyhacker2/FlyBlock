@@ -1,0 +1,10 @@
+frameworks/cocos2d-html5
+frameworks/js-bindings
+frameworks/runtime-src/proj.android/obj
+frameworks/runtime-src/proj.android/bin
+frameworks/runtime-src/proj.android/assets
+node_modules/
+tools/
+runtime/
+
+.DS_Store
