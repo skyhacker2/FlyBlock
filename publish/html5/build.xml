@@ -2,7 +2,7 @@
 <project name="Javascript compress project" basedir="/Users/eleven/projects/cocos2d-js-projects/FlyBlock" default="compile">
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
-             classpath="/Users/eleven/projects/cocos2d-js-v3.1/tools/cocos2d-console/bin/../plugins/project_compile/build_web/bin/compiler-1.8.jar"/>
+             classpath="/Users/eleven/projects/cocos2d-js-v3.1/tools/cocos2d-console/bin/../plugins/project_compile/build_web/bin/compiler-1.7.jar"/>
 
     <target name="compile">
         <jscomp compilationLevel="simple" 
@@ -266,7 +266,6 @@
             </sources>
             <sources dir="${basedir}">
                 <file name="src/libs/Wtk.js"/>
-                <file name="src/libs/WeixinApi.js"/>
                 <file name="src/libs/ShareUI.js"/>
                 <file name="src/Config/Config.js"/>
                 <file name="src/Config/ColumnType.js"/>

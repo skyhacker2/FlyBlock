@@ -12,7 +12,6 @@
 
     "jsList" : [
         "src/libs/Wtk.js",
-        "src/libs/WeixinApi.js",
         "src/libs/ShareUI.js",
         "src/Config/Config.js",
         "src/Config/ColumnType.js",
