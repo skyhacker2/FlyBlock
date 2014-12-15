@@ -113,7 +113,11 @@ GameLayer = BaseLayer.extend({
     shareBtn.addTouchEventListener((function(_this) {
       return function(sender, type) {
         _this.addChild(new ShareUI(), 100);
-        return share(0);
+        if (_this._score > 0) {
+          return share(1, _this._score);
+        } else {
+          return share(0);
+        }
       };
     })(this), this);
     return this.addChild(shareBtn, 5);

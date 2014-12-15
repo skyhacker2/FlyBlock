@@ -112,7 +112,10 @@ GameLayer = BaseLayer.extend
 		shareBtn.y = -shareBtn.getContentSize().height/2
 		shareBtn.addTouchEventListener (sender, type)=>
 			@addChild new ShareUI(), 100
-			share(0)
+			if @_score > 0
+				share(1, @_score)
+			else
+				share(0)
 		, @
 		@addChild shareBtn, 5
 
