@@ -20,9 +20,21 @@
             -khtml-user-select: none;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
+        #waiting {
+            width: 640px;
+            height: 1136px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            color: #fff;
+            padding: 200px;
+        }
     </style>
 </head>
 <body style="padding:0; margin: 0; background: #000;">
+<div id="waiting">
+    加载中...
+</div>
 <canvas id="gameCanvas" width="640" height="1136"></canvas>
 
 <script src="WeixinApi.js"></script>
