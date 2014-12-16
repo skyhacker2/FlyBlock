@@ -49,16 +49,19 @@
 
 cc.game.onStart = function(){
     cc.view.adjustViewPort(true);
-    if (browser.isAndroid || browser.isIOS) {
-        cc.log("手机浏览器");
-        cc.view.enableAutoFullScreen(true); // 是否自动全屏
-        cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.FIXED_WIDTH);
-    } else {
-        cc.log("PC浏览器");
-        cc.view.enableAutoFullScreen(false); // 是否自动全屏
-        cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.SHOW_ALL);
+    if (!cc.sys.isNative) {
+        if (browser.isAndroid || browser.isIOS) {
+            cc.log("手机浏览器");
+            cc.view.enableAutoFullScreen(true); // 是否自动全屏
+            cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.FIXED_WIDTH);
+        } else {
+            cc.log("PC浏览器");
+            cc.view.enableAutoFullScreen(false); // 是否自动全屏
+            cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.SHOW_ALL);
+        }
+        document.getElementById("waiting").style.display = 'none';
     }
-    
+
     cc.view.resizeWithBrowserSize(true);
     //load resources
     // cc.LoaderScene.preload(g_resources, function () {
