@@ -21,6 +21,10 @@ Block = GameObject.extend
 	setState: (state)->
 		@state = state
 
+	changeType: (type)->
+		@type = type
+		@setTexture type.textureName
+
 Block.getOrCreate = (type)->
 	block = null
 	for i in [0...BlockCache.length]

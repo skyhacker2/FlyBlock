@@ -25,15 +25,4 @@ gulp.task('copy',['clean'], function() {
 		.pipe(gulp.dest("./src/libs/"))
 });
 
-gulp.task('cleanPublish', function(cb) {
-	del(['publish'], cb);
-});
-
-gulp.task('publish', ['cleanPublish'], function() {
-	return gulp.src(['frameworks/cocos2d-html5/**/*.js', 'src/**/*.js', 'main.js'])
-		.pipe(concat('main.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest('publish'))
-});
-
 gulp.task('default', ['scripts', 'copy']);

@@ -4,9 +4,10 @@ BrickCache = [];
 
 Brick = GameObject.extend({
   _className: "Brick",
-  ctor: function() {
+  ctor: function(type) {
     this._super();
-    return this.initWithFile("res/brick.png");
+    this.initWithFile(type.textureName);
+    return this.type = type;
   },
   destroy: function() {
     this.active = false;
@@ -14,21 +15,27 @@ Brick = GameObject.extend({
   }
 });
 
-Brick.create = function() {
+Brick.create = function(type) {
   var brick;
-  brick = new Brick();
+  brick = new Brick(type);
   BrickCache.push(brick);
   return brick;
 };
 
-Brick.getOrCreate = function() {
+Brick.getOrCreate = function(type) {
   var brick, i, _i, _ref;
   brick = null;
   for (i = _i = 0, _ref = BrickCache.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
     brick = BrickCache[i];
     if (!brick.visible) {
+      brick.visible = true;
+      brick.active = true;
       return brick;
     }
   }
-  return Brick.create();
+  return Brick.create(type);
+};
+
+Brick.cleanCache = function() {
+  return BrickCache = [];
 };

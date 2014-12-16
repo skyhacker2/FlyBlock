@@ -16,6 +16,7 @@
         "src/Config/Config.js",
         "src/Config/ColumnType.js",
         "src/Config/BlockType.js",
+        "src/Config/BrickType.js",
         "src/GameObject/GameObject.js",
         "src/GameObject/Column.js",
         "src/GameObject/Block.js",
@@ -23,9 +24,11 @@
         "src/Utils.js",
         "src/BaseLayer.js",
         "src/MyLoaderScene.js",
+        "src/ChipmunkLayer.js",
         "src/Resources.js",
         "src/GameScene.js",
         "src/StartScene.js",
-        "src/TeachScene.js"
+        "src/TeachScene.js",
+        "src/ChipmunkTest.js"
     ]
 }

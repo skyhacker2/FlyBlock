@@ -270,6 +270,7 @@
                 <file name="src/Config/Config.js"/>
                 <file name="src/Config/ColumnType.js"/>
                 <file name="src/Config/BlockType.js"/>
+                <file name="src/Config/BrickType.js"/>
                 <file name="src/GameObject/GameObject.js"/>
                 <file name="src/GameObject/Column.js"/>
                 <file name="src/GameObject/Block.js"/>

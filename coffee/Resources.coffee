@@ -56,6 +56,11 @@ res =
 g_resources = []
 g_resources.push value for key, value of res
 
+g_chipmunkScene = [
+	res.fly_blue,
+	res.column_blue
+]
+
 g_startScene = [
 	res.start_page_bg,
 	res.start_btn,

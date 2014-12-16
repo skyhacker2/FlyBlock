@@ -1,4 +1,4 @@
-var g_gameScene, g_resources, g_startScene, g_teachScene, key, res, value;
+var g_chipmunkScene, g_gameScene, g_resources, g_startScene, g_teachScene, key, res, value;
 
 res = {
   HelloWorld_png: "res/HelloWorld.png",
@@ -61,6 +61,8 @@ for (key in res) {
   value = res[key];
   g_resources.push(value);
 }
+
+g_chipmunkScene = [res.fly_blue, res.column_blue];
 
 g_startScene = [res.start_page_bg, res.start_btn, res.rate_btn, res.teach_btn];
 

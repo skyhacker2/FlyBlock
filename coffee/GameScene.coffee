@@ -126,12 +126,12 @@ GameLayer = BaseLayer.extend
 		@block.stopAllActions()
 		@block.state = BlockState.UP
 		time = 0.2
-		action = cc.sequence cc.spawn(cc.rotateTo(time, -30),
+		action = cc.sequence cc.spawn(cc.rotateTo(time, -15),
 			cc.moveTo(time, cc.pAdd(@block.getPosition(), cc.p(0, 70)))
 			), cc.callFunc ()=>
 				#cc.log 'cc.callFunc'
 				@block.state = BlockState.DOWN
-				@block.runAction(cc.rotateTo(time, 30))
+				@block.runAction(cc.rotateTo(time, 15))
 				@time = 0
 
 		@block.runAction action
@@ -144,6 +144,7 @@ GameLayer = BaseLayer.extend
 		cc.log 'onExit'
 		Block.cleanCache()
 		Column.cleanCache()
+		Brick.cleanCache()
 		@_super()
 
 	update: (dt)->
@@ -202,16 +203,22 @@ GameLayer = BaseLayer.extend
 	_addBrick: (dt)->
 		if @_bricks.length > G.BRICK_NUM
 			return
-		brick = Brick.create()
+		num = getRandomInt(0, 9)
+		if num < 3
+			type = BrickType[getRandomInt(0, BrickType.length-1)]
+		else
+			type = BrickType[8]
+		brick = Brick.getOrCreate(type)
 		pos = cc.p(@_winSize.width + 100, @_winSize.height * 0.7)
-		randomX = getRandomInt(200, 600)
+		randomX = getRandomInt(400, 700)
 		randomY = getRandomInt(@_winSize.height/2, @_winSize.height * 0.9)
 		if @_bricks.length > 0
 			pos = @_bricks[@_bricks.length-1].getPosition()
 		pos.x += randomX
 		pos.y = randomY
 		brick.setPosition pos
-		@addChild brick
+		if not brick.getParent()
+			@addChild brick
 		@_bricks.push brick
 
 	_moveBrick: (dt)->
@@ -247,38 +254,39 @@ GameLayer = BaseLayer.extend
 
 	_checkIsCollide: ()->
 		column = null
+		pos = @block.getPosition()
+		blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
 		for i in [0...@_columns.length]
 			column = @_columns[i]
 			rect = column.getBoundingBox()
-			blockRect = @block.getBoundingBox()
-			# 四个点
-			p1 = cc.p(cc.rectGetMinX(blockRect), cc.rectGetMinY(blockRect))
-			p2 = cc.p(cc.rectGetMaxX(blockRect), cc.rectGetMinY(blockRect))
-			p3 = cc.p(cc.rectGetMinX(blockRect), cc.rectGetMaxY(blockRect))
-			p4 = cc.p(cc.rectGetMaxX(blockRect), cc.rectGetMaxY(blockRect))
-			if cc.rectContainsPoint(rect, @block.getPosition())
-				cc.log "碰撞啦"
-				if @block.type.id isnt column.type.id
-					@_gameOver = true
-					@gameOver()
-				else
-					cc.log "Bingo"
-					@_score++
-					@_label.setString(@_score)
-					@block.destroy()
-					@_nextBlock()
-				return
+			if cc.rectContainsPoint(rect, @block.getPosition()) or
+				cc.rectIntersectsRect(rect, blockRect)
+					cc.log "碰撞啦"
+					if @block.type.id isnt column.type.id
+						@_gameOver = true
+						@gameOver()
+					else
+						cc.log "Bingo"
+						@_score++
+						@_label.setString(@_score)
+						@block.destroy()
+						@_nextBlock()
+					return
 		# 砖块的碰撞
 		if not @block.invincible
 			dis = @block.width
 			# cc.log "dis #{dis}"
 			for brick in @_bricks
 				do(brick)=>
-					d = Math.sqrt(Math.pow(@block.x - brick.x, 2) + Math.pow(@block.y - brick.y, 2))
-					# cc.log "d #{d}"
-					if d < dis
-						@_gameOver = true
-						@gameOver()
+					if cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)
+						if brick.type.id is 8
+							@_gameOver = true
+							@gameOver()
+						else
+							@block.changeType(BlockType[brick.type.id])
+							@block.invincible = true
+							@_invincibleTime = 0
+							brick.destroy()
 
 	_nextBlock: ()->
 		@_invincibleTime = 0

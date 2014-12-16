@@ -67,5 +67,8 @@ cc.game.onStart = function(){
     MyLoaderScene.preload(g_startScene, function() {
         cc.director.runScene(new StartScene());
     }, this);
+    // MyLoaderScene.preload(g_chipmunkScene, function() {
+    //     cc.director.runScene(ChipmunkTest.scene());
+    // }, this);
 };
 cc.game.run();

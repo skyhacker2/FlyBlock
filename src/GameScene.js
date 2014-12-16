@@ -130,10 +130,10 @@ GameLayer = BaseLayer.extend({
     this.block.stopAllActions();
     this.block.state = BlockState.UP;
     time = 0.2;
-    action = cc.sequence(cc.spawn(cc.rotateTo(time, -30), cc.moveTo(time, cc.pAdd(this.block.getPosition(), cc.p(0, 70)))), cc.callFunc((function(_this) {
+    action = cc.sequence(cc.spawn(cc.rotateTo(time, -15), cc.moveTo(time, cc.pAdd(this.block.getPosition(), cc.p(0, 70)))), cc.callFunc((function(_this) {
       return function() {
         _this.block.state = BlockState.DOWN;
-        _this.block.runAction(cc.rotateTo(time, 30));
+        _this.block.runAction(cc.rotateTo(time, 15));
         return _this.time = 0;
       };
     })(this)));
@@ -147,6 +147,7 @@ GameLayer = BaseLayer.extend({
     cc.log('onExit');
     Block.cleanCache();
     Column.cleanCache();
+    Brick.cleanCache();
     return this._super();
   },
   update: function(dt) {
@@ -220,13 +221,19 @@ GameLayer = BaseLayer.extend({
     }
   },
   _addBrick: function(dt) {
-    var brick, pos, randomX, randomY;
+    var brick, num, pos, randomX, randomY, type;
     if (this._bricks.length > G.BRICK_NUM) {
       return;
     }
-    brick = Brick.create();
+    num = getRandomInt(0, 9);
+    if (num < 3) {
+      type = BrickType[getRandomInt(0, BrickType.length - 1)];
+    } else {
+      type = BrickType[8];
+    }
+    brick = Brick.getOrCreate(type);
     pos = cc.p(this._winSize.width + 100, this._winSize.height * 0.7);
-    randomX = getRandomInt(200, 600);
+    randomX = getRandomInt(400, 700);
     randomY = getRandomInt(this._winSize.height / 2, this._winSize.height * 0.9);
     if (this._bricks.length > 0) {
       pos = this._bricks[this._bricks.length - 1].getPosition();
@@ -234,7 +241,9 @@ GameLayer = BaseLayer.extend({
     pos.x += randomX;
     pos.y = randomY;
     brick.setPosition(pos);
-    this.addChild(brick);
+    if (!brick.getParent()) {
+      this.addChild(brick);
+    }
     return this._bricks.push(brick);
   },
   _moveBrick: function(dt) {
@@ -284,17 +293,14 @@ GameLayer = BaseLayer.extend({
     }
   },
   _checkIsCollide: function() {
-    var blockRect, brick, column, dis, i, p1, p2, p3, p4, rect, _i, _j, _len, _ref, _ref1, _results;
+    var blockRect, brick, column, dis, i, pos, rect, _i, _j, _len, _ref, _ref1, _results;
     column = null;
+    pos = this.block.getPosition();
+    blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
     for (i = _i = 0, _ref = this._columns.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
       column = this._columns[i];
       rect = column.getBoundingBox();
-      blockRect = this.block.getBoundingBox();
-      p1 = cc.p(cc.rectGetMinX(blockRect), cc.rectGetMinY(blockRect));
-      p2 = cc.p(cc.rectGetMaxX(blockRect), cc.rectGetMinY(blockRect));
-      p3 = cc.p(cc.rectGetMinX(blockRect), cc.rectGetMaxY(blockRect));
-      p4 = cc.p(cc.rectGetMaxX(blockRect), cc.rectGetMaxY(blockRect));
-      if (cc.rectContainsPoint(rect, this.block.getPosition())) {
+      if (cc.rectContainsPoint(rect, this.block.getPosition()) || cc.rectIntersectsRect(rect, blockRect)) {
         cc.log("碰撞啦");
         if (this.block.type.id !== column.type.id) {
           this._gameOver = true;
@@ -317,11 +323,16 @@ GameLayer = BaseLayer.extend({
         brick = _ref1[_j];
         _results.push((function(_this) {
           return function(brick) {
-            var d;
-            d = Math.sqrt(Math.pow(_this.block.x - brick.x, 2) + Math.pow(_this.block.y - brick.y, 2));
-            if (d < dis) {
-              _this._gameOver = true;
-              return _this.gameOver();
+            if (cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)) {
+              if (brick.type.id === 8) {
+                _this._gameOver = true;
+                return _this.gameOver();
+              } else {
+                _this.block.changeType(BlockType[brick.type.id]);
+                _this.block.invincible = true;
+                _this._invincibleTime = 0;
+                return brick.destroy();
+              }
             }
           };
         })(this)(brick));

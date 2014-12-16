@@ -24,6 +24,10 @@ Block = GameObject.extend({
   },
   setState: function(state) {
     return this.state = state;
+  },
+  changeType: function(type) {
+    this.type = type;
+    return this.setTexture(type.textureName);
   }
 });
 
