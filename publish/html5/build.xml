@@ -277,10 +277,12 @@
                 <file name="src/Utils.js"/>
                 <file name="src/BaseLayer.js"/>
                 <file name="src/MyLoaderScene.js"/>
+                <file name="src/ChipmunkLayer.js"/>
                 <file name="src/Resources.js"/>
                 <file name="src/GameScene.js"/>
                 <file name="src/StartScene.js"/>
                 <file name="src/TeachScene.js"/>
+                <file name="src/ChipmunkTest.js"/>
                 <file name="main.js"/>
 
             </sources>
