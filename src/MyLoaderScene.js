@@ -62,9 +62,7 @@ MyLoaderScene.preload = function(resources, cb) {
     i = resources[_i];
     cc.log(i);
   }
-  if (!MyLoaderScene._loaderScene) {
-    MyLoaderScene._loaderScene = new MyLoaderScene();
-  }
+  MyLoaderScene._loaderScene = new MyLoaderScene();
   MyLoaderScene._loaderScene.initWithResources(resources, cb);
   return cc.director.runScene(MyLoaderScene._loaderScene);
 };

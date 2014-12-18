@@ -42,10 +42,9 @@ GameLayer = BaseLayer.extend
 			cc.eventManager.addListener
 				event: cc.EventListener.TOUCH_ONE_BY_ONE
 				swallowTouches: true
-				onTouchBegan: ()->
-					return true
-				onTouchEnded: =>
+				onTouchBegan: ()=>
 					@touch()
+					return true
 				, @
 
 	createUI: ()->
@@ -93,29 +92,36 @@ GameLayer = BaseLayer.extend
 		@addChild board, 5
 
 		againBtn = @againBtn = new ccui.Button()
-		againBtn.loadTextures 'res/again_btn.png'
+		againBtn.loadTextureNormal 'res/again_btn.png'
 		againBtn.setTouchEnabled true
 		againBtn.setPressedActionEnabled true
 		againBtn.x = @_winSize.width * 0.3
 		againBtn.y = -againBtn.getContentSize().height/2
 		againBtn.addTouchEventListener (sender, type)=>
-			MyLoaderScene.preload g_gameScene, ()->
-				cc.director.runScene new GameScene()
-			, @
+			switch type
+				when ccui.Widget.TOUCH_ENDED
+					MyLoaderScene.preload g_gameScene, ()->
+					cc.director.runScene new GameScene()
+		, @
 		@addChild againBtn, 5
 
 		shareBtn = @shareBtn = new ccui.Button()
-		shareBtn.loadTextures 'res/share_btn.png'
+		shareBtn.loadTextureNormal 'res/share_btn.png'
 		shareBtn.setTouchEnabled true
 		shareBtn.setPressedActionEnabled true
 		shareBtn.x = @_winSize.width * 0.7
 		shareBtn.y = -shareBtn.getContentSize().height/2
 		shareBtn.addTouchEventListener (sender, type)=>
-			@addChild new ShareUI(), 100
-			if @_score > 0
-				share(1, @_score)
-			else
-				share(0)
+			switch type
+				when ccui.Widget.TOUCH_ENDED
+					if not cc.sys.isNative
+						@addChild new ShareUI(), 100
+						if @_score > 0
+							share(1, @_score)
+						else
+							share(0)
+					else
+						cc.log '实现原生分享'
 		, @
 		@addChild shareBtn, 5
 
@@ -123,6 +129,12 @@ GameLayer = BaseLayer.extend
 	touch: ()->
 		if @_gameOver
 			return
+		now = @_gameTime
+		# cc.log now - @_preEffectTime
+		# if now - @_preEffectTime > 0.1
+			
+		# @_preEffectTime = now
+		cc.audioEngine.playEffect "res/touch.mp3"
 		@block.stopAllActions()
 		@block.state = BlockState.UP
 		time = 0.2
@@ -139,6 +151,7 @@ GameLayer = BaseLayer.extend
 	onEnter: ()->
 		@_super()
 		@scheduleUpdate()
+		cc.audioEngine.preloadEffect "res/touch.mp3" if cc.audioEngine.preloadEffect
 
 	onExit: ()->
 		cc.log 'onExit'
@@ -164,7 +177,7 @@ GameLayer = BaseLayer.extend
 		for layer in @_cloudLayers
 			do (layer)->
 				pos = layer.getPosition()
-				layer.setPosition cc.p(pos.x - G.CLOUD_MOVE_INTERVAL, 0)
+				layer.setPosition cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0)
 				if layer.getPosition().x + layer.getContentSize().width < 0
 					layer.setPosition cc.p(layer.getContentSize().width, 0)
 		return 0
@@ -173,7 +186,7 @@ GameLayer = BaseLayer.extend
 		for c in @_columns
 			do(c)->
 				pos = c.getPosition()
-				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL, pos.y)
+				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y)
 
 		if @_columns[0].getPosition().x + @_columns[0].getContentSize().width/2 < 0
 			@_columns[0].destroy()
@@ -225,7 +238,7 @@ GameLayer = BaseLayer.extend
 		for c in @_bricks
 			do(c)->
 				pos = c.getPosition()
-				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL, pos.y)
+				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y)
 
 		if @_bricks.length > 0 and @_bricks[0].getPosition().x + @_bricks[0].getContentSize().width/2 < 0
 			@_bricks[0].destroy()
@@ -267,6 +280,7 @@ GameLayer = BaseLayer.extend
 						@gameOver()
 					else
 						cc.log "Bingo"
+						cc.audioEngine.playEffect 'res/score.mp3'
 						@_score++
 						@_label.setString(@_score)
 						@block.destroy()

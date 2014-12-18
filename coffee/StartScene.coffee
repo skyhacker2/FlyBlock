@@ -28,7 +28,9 @@ StartLayer = BaseLayer.extend
 			callback: (sender, type)->
 				switch type
 					when ccui.Widget.TOUCH_ENDED
+						cc.log 'touch end'
 						MyLoaderScene.preload g_gameScene, ()->
+							cc.log 'preload complete'
 							cc.director.runScene new GameScene()
 			target: @
 		@addButton
@@ -55,9 +57,10 @@ StartLayer = BaseLayer.extend
 
 
 	addButton: (opt)->
+		cc.log 'addButton'
 		#button = new ccui.Button.create(opt.normalImage, opt.selectedImage, opt.disableImage)
 		button = new ccui.Button()
-		button.loadTextures(opt.normalImage, opt.selectedImage, opt.disableImage)
+		button.loadTextureNormal(opt.normalImage)
 		button.setTouchEnabled(true)
 		button.setPressedActionEnabled(true)
 		button.x = opt.x or 0

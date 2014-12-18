@@ -50,6 +50,8 @@
 cc.game.onStart = function(){
     cc.view.adjustViewPort(true);
     if (!cc.sys.isNative) {
+        Wtk.init();
+        var browser = Wtk.browser;
         if (browser.isAndroid || browser.isIOS) {
             cc.log("手机浏览器");
             cc.view.enableAutoFullScreen(true); // 是否自动全屏
@@ -60,12 +62,19 @@ cc.game.onStart = function(){
             cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.SHOW_ALL);
         }
         document.getElementById("waiting").style.display = 'none';
+    } else {
+        cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.FIXED_WIDTH);
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        searchPaths.push('script');
+        searchPaths.push('src');
+        searchPaths.push('res');
+        jsb.fileUtils.setSearchPaths(searchPaths);
     }
 
     cc.view.resizeWithBrowserSize(true);
     //load resources
-    // cc.LoaderScene.preload(g_resources, function () {
-    //     cc.director.runScene(new HelloWorldScene());
+    // cc.LoaderScene.preload(g_gameScene, function () {
+    //     cc.director.runScene(new GameScene());
     // }, this);
     MyLoaderScene.preload(g_startScene, function() {
         cc.director.runScene(new StartScene());

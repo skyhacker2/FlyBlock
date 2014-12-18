@@ -102,16 +102,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
     
-#if (COCOS2D_DEBUG > 0)
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    startRuntime();
-#else
+//#if (COCOS2D_DEBUG > 0)
+//    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+//    startRuntime();
+//#else
     sc->start();
     sc->runScript("script/jsb_boot.js");
     auto engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript(ConfigParser::getInstance()->getEntryFile().c_str());
-#endif
+//#endif
     
     return true;
 }

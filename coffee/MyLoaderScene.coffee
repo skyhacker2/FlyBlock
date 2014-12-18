@@ -52,8 +52,7 @@ MyLoaderScene = cc.Scene.extend
 
 MyLoaderScene.preload = (resources, cb)->
 	cc.log i for i in resources
-	if not MyLoaderScene._loaderScene
-		MyLoaderScene._loaderScene = new MyLoaderScene()
+	MyLoaderScene._loaderScene = new MyLoaderScene()
 
 	MyLoaderScene._loaderScene.initWithResources(resources, cb)
 	cc.director.runScene(MyLoaderScene._loaderScene)

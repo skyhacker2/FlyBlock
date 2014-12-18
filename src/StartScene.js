@@ -15,7 +15,9 @@ StartLayer = BaseLayer.extend({
       callback: function(sender, type) {
         switch (type) {
           case ccui.Widget.TOUCH_ENDED:
+            cc.log('touch end');
             return MyLoaderScene.preload(g_gameScene, function() {
+              cc.log('preload complete');
               return cc.director.runScene(new GameScene());
             });
         }
@@ -53,8 +55,9 @@ StartLayer = BaseLayer.extend({
   },
   addButton: function(opt) {
     var button;
+    cc.log('addButton');
     button = new ccui.Button();
-    button.loadTextures(opt.normalImage, opt.selectedImage, opt.disableImage);
+    button.loadTextureNormal(opt.normalImage);
     button.setTouchEnabled(true);
     button.setPressedActionEnabled(true);
     button.x = opt.x || 0;

@@ -39,12 +39,10 @@ GameLayer = BaseLayer.extend({
       return cc.eventManager.addListener({
         event: cc.EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
-        onTouchBegan: function() {
-          return true;
-        },
-        onTouchEnded: (function(_this) {
+        onTouchBegan: (function(_this) {
           return function() {
-            return _this.touch();
+            _this.touch();
+            return true;
           };
         })(this)
       }, this);
@@ -91,42 +89,53 @@ GameLayer = BaseLayer.extend({
     board.y = -board.getContentSize().height / 2;
     this.addChild(board, 5);
     againBtn = this.againBtn = new ccui.Button();
-    againBtn.loadTextures('res/again_btn.png');
+    againBtn.loadTextureNormal('res/again_btn.png');
     againBtn.setTouchEnabled(true);
     againBtn.setPressedActionEnabled(true);
     againBtn.x = this._winSize.width * 0.3;
     againBtn.y = -againBtn.getContentSize().height / 2;
     againBtn.addTouchEventListener((function(_this) {
       return function(sender, type) {
-        return MyLoaderScene.preload(g_gameScene, function() {
-          return cc.director.runScene(new GameScene());
-        }, _this);
+        switch (type) {
+          case ccui.Widget.TOUCH_ENDED:
+            MyLoaderScene.preload(g_gameScene, function() {});
+            return cc.director.runScene(new GameScene());
+        }
       };
-    })(this));
+    })(this), this);
     this.addChild(againBtn, 5);
     shareBtn = this.shareBtn = new ccui.Button();
-    shareBtn.loadTextures('res/share_btn.png');
+    shareBtn.loadTextureNormal('res/share_btn.png');
     shareBtn.setTouchEnabled(true);
     shareBtn.setPressedActionEnabled(true);
     shareBtn.x = this._winSize.width * 0.7;
     shareBtn.y = -shareBtn.getContentSize().height / 2;
     shareBtn.addTouchEventListener((function(_this) {
       return function(sender, type) {
-        _this.addChild(new ShareUI(), 100);
-        if (_this._score > 0) {
-          return share(1, _this._score);
-        } else {
-          return share(0);
+        switch (type) {
+          case ccui.Widget.TOUCH_ENDED:
+            if (!cc.sys.isNative) {
+              _this.addChild(new ShareUI(), 100);
+              if (_this._score > 0) {
+                return share(1, _this._score);
+              } else {
+                return share(0);
+              }
+            } else {
+              return cc.log('实现原生分享');
+            }
         }
       };
     })(this), this);
     return this.addChild(shareBtn, 5);
   },
   touch: function() {
-    var action, time;
+    var action, now, time;
     if (this._gameOver) {
       return;
     }
+    now = this._gameTime;
+    cc.audioEngine.playEffect("res/touch.mp3");
     this.block.stopAllActions();
     this.block.state = BlockState.UP;
     time = 0.2;
@@ -141,7 +150,10 @@ GameLayer = BaseLayer.extend({
   },
   onEnter: function() {
     this._super();
-    return this.scheduleUpdate();
+    this.scheduleUpdate();
+    if (cc.audioEngine.preloadEffect) {
+      return cc.audioEngine.preloadEffect("res/touch.mp3");
+    }
   },
   onExit: function() {
     cc.log('onExit');
@@ -170,7 +182,7 @@ GameLayer = BaseLayer.extend({
     _fn = function(layer) {
       var pos;
       pos = layer.getPosition();
-      layer.setPosition(cc.p(pos.x - G.CLOUD_MOVE_INTERVAL, 0));
+      layer.setPosition(cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0));
       if (layer.getPosition().x + layer.getContentSize().width < 0) {
         return layer.setPosition(cc.p(layer.getContentSize().width, 0));
       }
@@ -187,7 +199,7 @@ GameLayer = BaseLayer.extend({
     _fn = function(c) {
       var pos;
       pos = c.getPosition();
-      return c.setPosition(cc.p(pos.x - G.MOVE_INTERVAL, pos.y));
+      return c.setPosition(cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y));
     };
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       c = _ref[_i];
@@ -252,7 +264,7 @@ GameLayer = BaseLayer.extend({
     _fn = function(c) {
       var pos;
       pos = c.getPosition();
-      return c.setPosition(cc.p(pos.x - G.MOVE_INTERVAL, pos.y));
+      return c.setPosition(cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y));
     };
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       c = _ref[_i];
@@ -307,6 +319,7 @@ GameLayer = BaseLayer.extend({
           this.gameOver();
         } else {
           cc.log("Bingo");
+          cc.audioEngine.playEffect('res/score.mp3');
           this._score++;
           this._label.setString(this._score);
           this.block.destroy();

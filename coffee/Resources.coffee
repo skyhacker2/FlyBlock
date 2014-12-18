@@ -51,6 +51,8 @@ res =
 	font: "res/font.png"
 	font_fnt: "res/font.fnt"
 	weixin_arrow: "res/weixin_arrow.png"
+	touch_mp3: "res/touch2.wav"
+	score_mp3: "res/score.mp3"
 
 
 g_resources = []
@@ -116,5 +118,7 @@ g_gameScene = [
 	res.score_board,
 	res.font,
 	res.font_fnt,
-	res.weixin_arrow
+	res.weixin_arrow,
+	res.touch_mp3,
+	res.score_mp3
 ]
