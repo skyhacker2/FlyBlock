@@ -129,12 +129,8 @@ GameLayer = BaseLayer.extend
 	touch: ()->
 		if @_gameOver
 			return
-		now = @_gameTime
-		# cc.log now - @_preEffectTime
-		# if now - @_preEffectTime > 0.1
-			
-		# @_preEffectTime = now
-		cc.audioEngine.playEffect "res/touch.mp3"
+		cc.audioEngine.playEffect "res/touch.mp3", true
+
 		@block.stopAllActions()
 		@block.state = BlockState.UP
 		time = 0.2
@@ -151,7 +147,10 @@ GameLayer = BaseLayer.extend
 	onEnter: ()->
 		@_super()
 		@scheduleUpdate()
-		cc.audioEngine.preloadEffect "res/touch.mp3" if cc.audioEngine.preloadEffect
+		if cc.audioEngine.preloadEffect
+			cc.log 'preload effect'
+			cc.audioEngine.preloadEffect "res/touch.mp3" 
+			cc.audioEngine.preloadEffect "res/score.mp3"
 
 	onExit: ()->
 		cc.log 'onExit'
@@ -161,6 +160,8 @@ GameLayer = BaseLayer.extend
 		@_super()
 
 	update: (dt)->
+		# if cc.sys.os is cc.sys.OS_ANDROID
+		#  	cc.audioEngine.playEffect "res/touch.mp3"
 		@_gameTime += dt
 		if not @_gameOver
 			@_updateCloudLayer(dt)

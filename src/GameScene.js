@@ -130,12 +130,11 @@ GameLayer = BaseLayer.extend({
     return this.addChild(shareBtn, 5);
   },
   touch: function() {
-    var action, now, time;
+    var action, time;
     if (this._gameOver) {
       return;
     }
-    now = this._gameTime;
-    cc.audioEngine.playEffect("res/touch.mp3");
+    cc.audioEngine.playEffect("res/touch.mp3", true);
     this.block.stopAllActions();
     this.block.state = BlockState.UP;
     time = 0.2;
@@ -152,7 +151,9 @@ GameLayer = BaseLayer.extend({
     this._super();
     this.scheduleUpdate();
     if (cc.audioEngine.preloadEffect) {
-      return cc.audioEngine.preloadEffect("res/touch.mp3");
+      cc.log('preload effect');
+      cc.audioEngine.preloadEffect("res/touch.mp3");
+      return cc.audioEngine.preloadEffect("res/score.mp3");
     }
   },
   onExit: function() {

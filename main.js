@@ -70,13 +70,14 @@ cc.game.onStart = function(){
         searchPaths.push('res');
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
+    cc.director.setAnimationInterval(1.0 / 30);
 
     cc.view.resizeWithBrowserSize(true);
     //load resources
     // cc.LoaderScene.preload(g_gameScene, function () {
     //     cc.director.runScene(new GameScene());
     // }, this);
-    MyLoaderScene.preload(g_startScene, function() {
+    cc.LoaderScene.preload(g_startScene, function() {
         cc.director.runScene(new StartScene());
     }, this);
     // MyLoaderScene.preload(g_chipmunkScene, function() {

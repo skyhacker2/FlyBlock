@@ -265,6 +265,7 @@
 
             </sources>
             <sources dir="${basedir}">
+                <file name="src/libs/extends.js"/>
                 <file name="src/libs/Wtk.js"/>
                 <file name="src/libs/ShareUI.js"/>
                 <file name="src/Config/Config.js"/>

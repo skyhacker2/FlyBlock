@@ -29,9 +29,10 @@ StartLayer = BaseLayer.extend
 				switch type
 					when ccui.Widget.TOUCH_ENDED
 						cc.log 'touch end'
-						MyLoaderScene.preload g_gameScene, ()->
+						cc.LoaderScene.preload g_gameScene, ()->
 							cc.log 'preload complete'
 							cc.director.runScene new GameScene()
+						, @
 			target: @
 		@addButton
 			normalImage: "res/teach_btn.png"
@@ -40,8 +41,9 @@ StartLayer = BaseLayer.extend
 			callback: (sender, type)->
 				switch type
 					when ccui.Widget.TOUCH_ENDED
-						MyLoaderScene.preload g_teachScene, ()->
+						cc.LoaderScene.preload g_teachScene, ()->
 							cc.director.runScene new TeachScene()
+						, @
 			target: @
 
 		if cc.sys.isNative

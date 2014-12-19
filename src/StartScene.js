@@ -16,10 +16,10 @@ StartLayer = BaseLayer.extend({
         switch (type) {
           case ccui.Widget.TOUCH_ENDED:
             cc.log('touch end');
-            return MyLoaderScene.preload(g_gameScene, function() {
+            return cc.LoaderScene.preload(g_gameScene, function() {
               cc.log('preload complete');
               return cc.director.runScene(new GameScene());
-            });
+            }, this);
         }
       },
       target: this
@@ -31,9 +31,9 @@ StartLayer = BaseLayer.extend({
       callback: function(sender, type) {
         switch (type) {
           case ccui.Widget.TOUCH_ENDED:
-            return MyLoaderScene.preload(g_teachScene, function() {
+            return cc.LoaderScene.preload(g_teachScene, function() {
               return cc.director.runScene(new TeachScene());
-            });
+            }, this);
         }
       },
       target: this
