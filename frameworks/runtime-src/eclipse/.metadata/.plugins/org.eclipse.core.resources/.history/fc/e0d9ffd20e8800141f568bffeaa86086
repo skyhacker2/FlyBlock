@@ -1,0 +1,31 @@
+package com.eleven.game.libpluginutils.facade;
+
+import com.eleven.game.libpluginutils.analytics.IAnalytics;
+import com.eleven.game.libpluginutils.analytics.UmengAnalytics;
+import com.umeng.analytics.AnalyticsConfig;
+
+import android.content.Context;
+import android.os.Handler;
+
+
+public class Facade {
+	public final static String TAG = Facade.class.getSimpleName();
+	
+	static Handler mHandler;
+	
+	static Context mContext;
+	
+	static IAnalytics mAnalytics;
+	
+	public static void init(Context context) {
+		mAnalytics = new UmengAnalytics(mContext);
+	}
+	
+	public void setAnalyticsKey(String key) {
+		mAnalytics.setAppkey(key);
+	}
+	
+	public void onResume(Context context) {
+		
+	}
+}

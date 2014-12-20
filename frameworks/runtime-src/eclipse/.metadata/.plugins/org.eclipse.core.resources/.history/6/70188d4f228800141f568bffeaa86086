@@ -1,0 +1,15 @@
+package com.eleven.game.libpluginutils.ads;
+
+public interface IAdManager {
+	public boolean init();
+	
+	public void showBannerAd();
+	
+	public void hideBannerAd();
+	
+	public void showSpotAd();
+	
+	public void hideSpotAd();
+	
+	public void setAppKey(String appKey, String appSecret);
+}

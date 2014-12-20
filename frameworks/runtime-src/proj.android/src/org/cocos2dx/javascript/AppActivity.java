@@ -28,11 +28,14 @@ package org.cocos2dx.javascript;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.eleven.game.libpluginutils.facade.Facade;
 
 
 // The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
@@ -43,8 +46,12 @@ public class AppActivity extends Cocos2dxActivity{
     static String hostIPAdress = "0.0.0.0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        
+        Facade.init(this);
+        Facade.setAnalyticsKey("5494218afd98c54770000100");
+        Facade.initAdManager(this, mFrameLayout);
+        Facade.setAdAppKey("4b99ce3edf9c9dd7", "0d4e009ac39ac7b2");
         
         if(nativeIsLandScape()) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -79,5 +86,26 @@ public class AppActivity extends Cocos2dxActivity{
     
     private static native boolean nativeIsLandScape();
     private static native boolean nativeIsDebug();
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Facade.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Facade.onPause(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Facade.onDestroy(this);
+	}
+    
+	
+    
     
 }

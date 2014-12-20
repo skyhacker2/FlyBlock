@@ -36,7 +36,7 @@ GameLayer = BaseLayer.extend({
       }, this);
     }
     if (cc.sys.capabilities.hasOwnProperty('touches')) {
-      return cc.eventManager.addListener({
+      cc.eventManager.addListener({
         event: cc.EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
         onTouchBegan: (function(_this) {
@@ -47,9 +47,25 @@ GameLayer = BaseLayer.extend({
         })(this)
       }, this);
     }
+    if (cc.sys.capabilities.hasOwnProperty("keyboard")) {
+      return cc.eventManager.addListener({
+        event: cc.EventListener.KEYBOARD,
+        onKeyPressed: function(key, evnet) {
+          return cc.log('key pressed ' + key);
+        },
+        onKeyReleased: function(key, event) {
+          cc.log("key pressed " + key);
+          if (key === 6) {
+            return cc.LoaderScene.preload(g_startScene, function() {
+              return cc.director.runScene(new StartScene());
+            });
+          }
+        }
+      }, this);
+    }
   },
   createUI: function() {
-    var againBtn, block, blockType, board, cloud, cloudLayer, i, shareBtn, w, _i, _j;
+    var againBtn, bestScore, block, blockType, board, cloud, cloudLayer, i, shareBtn, w, _i, _j;
     w = 0;
     for (i = _i = 0; _i <= 1; i = ++_i) {
       cloudLayer = new cc.Layer();
@@ -74,6 +90,15 @@ GameLayer = BaseLayer.extend({
       y: this._winSize.height * 0.8
     });
     this.addChild(this._label, 10);
+    bestScore = cc.sys.localStorage.getItem("best") || 0;
+    this.bestLabel = new cc.LabelTTF("Best: " + bestScore, "Ariel", 40);
+    this.bestLabel.attr({
+      anchorX: 0,
+      anchory: 1,
+      x: 10,
+      y: this._winSize.height - 40
+    });
+    this.addChild(this.bestLabel);
     for (i = _j = 0; _j < 5; i = ++_j) {
       this._blockQueue.push(BlockType[getRandomInt(0, BlockType.length)]);
     }
@@ -122,7 +147,7 @@ GameLayer = BaseLayer.extend({
                 return share(0);
               }
             } else {
-              return cc.log('实现原生分享');
+              return _this.takeScreenshot();
             }
         }
       };
@@ -134,7 +159,7 @@ GameLayer = BaseLayer.extend({
     if (this._gameOver) {
       return;
     }
-    cc.audioEngine.playEffect("res/touch.mp3", true);
+    cc.audioEngine.playEffect("res/touch.mp3");
     this.block.stopAllActions();
     this.block.state = BlockState.UP;
     time = 0.2;
@@ -161,6 +186,10 @@ GameLayer = BaseLayer.extend({
     Block.cleanCache();
     Column.cleanCache();
     Brick.cleanCache();
+    if (cc.sys.isNative) {
+      jsb.reflection.callStaticMethod(G.JAVA_CLASS, "hideBannerAd", "()V");
+      jsb.reflection.callStaticMethod(G.JAVA_CLASS, "hideSpotAd", "()V");
+    }
     return this._super();
   },
   update: function(dt) {
@@ -239,15 +268,15 @@ GameLayer = BaseLayer.extend({
       return;
     }
     num = getRandomInt(0, 9);
-    if (num < 3) {
+    if (num < 2) {
       type = BrickType[getRandomInt(0, BrickType.length - 1)];
     } else {
       type = BrickType[8];
     }
     brick = Brick.getOrCreate(type);
     pos = cc.p(this._winSize.width + 100, this._winSize.height * 0.7);
-    randomX = getRandomInt(400, 700);
-    randomY = getRandomInt(this._winSize.height / 2, this._winSize.height * 0.9);
+    randomX = getRandomInt(200, 700);
+    randomY = getRandomInt(this._winSize.height / 3, this._winSize.height * 0.9);
     if (this._bricks.length > 0) {
       pos = this._bricks[this._bricks.length - 1].getPosition();
     }
@@ -367,10 +396,16 @@ GameLayer = BaseLayer.extend({
     }
   },
   gameOver: function() {
-    var scoreLabel, timeLabel;
+    var bestScore, scoreLabel, timeLabel;
     this.scoreBoard.runAction(cc.sequence(cc.delayTime(0.2), cc.moveTo(0.3, cc.p(this._winSize.width / 2, this._winSize.height * 0.65))));
     this.againBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.3, this._winSize.height * 0.45))));
     this.shareBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.7, this._winSize.height * 0.45))));
+    bestScore = cc.sys.localStorage.getItem("best") || 0;
+    cc.log(bestScore);
+    if (this._score > bestScore) {
+      cc.log('新纪录');
+      cc.sys.localStorage.setItem("best", this._score);
+    }
     this._label.visible = false;
     scoreLabel = new cc.LabelBMFont("" + this._score, "res/font.fnt");
     scoreLabel.x = 170;
@@ -381,7 +416,24 @@ GameLayer = BaseLayer.extend({
     timeLabel.x = 170;
     timeLabel.y = 45;
     timeLabel.anchorX = 0;
-    return this.scoreBoard.addChild(timeLabel);
+    this.scoreBoard.addChild(timeLabel);
+    if (cc.sys.isNative) {
+      jsb.reflection.callStaticMethod(G.JAVA_CLASS, "showBannerAd", "()V");
+      return jsb.reflection.callStaticMethod(G.JAVA_CLASS, "showSpotAd", "()V");
+    }
+  },
+  takeScreenshot: function() {
+    var texture;
+    cc.log('takeScreenshot');
+    texture = new cc.RenderTexture(this._winSize.width, this._winSize.height);
+    texture.setPosition(cc.p(this._winSize.width / 2, this._winSize.height / 2));
+    texture.begin();
+    cc.director.getRunningScene().visit();
+    texture.end();
+    texture.saveToFile("screenshot.png", cc.IMAGE_FORMAT_PNG);
+    if (cc.sys.isNative) {
+      return jsb.reflection.callStaticMethod(G.JAVA_CLASS, "share", "(Ljava/lang/String;)V", "我在玩空降小色块,成功解救了" + this._score + "个小方块,麽麽哒~");
+    }
   }
 });
 

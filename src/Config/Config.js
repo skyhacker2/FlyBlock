@@ -8,5 +8,6 @@ G = {
   FLOAT_NUM: 5,
   INVINCIBLE_TIME: 2,
   CLOUD_MOVE_INTERVAL: 230,
-  MOVE_INTERVAL: 200
+  MOVE_INTERVAL: 200,
+  JAVA_CLASS: "com/eleven/game/libpluginutils/facade/Facade"
 };

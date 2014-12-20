@@ -51,7 +51,7 @@ res =
 	font: "res/font.png"
 	font_fnt: "res/font.fnt"
 	weixin_arrow: "res/weixin_arrow.png"
-	touch_mp3: "res/touch2.wav"
+	touch_mp3: "res/touch.MP3"
 	score_mp3: "res/score.mp3"
 
 

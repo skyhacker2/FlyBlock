@@ -1,0 +1,6 @@
+package com.eleven.game.libpluginutils.facade;
+
+
+public class Facade {
+	public final static String TAG = Facade.class.getSimpleName();
+}

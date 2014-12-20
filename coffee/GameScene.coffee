@@ -46,6 +46,17 @@ GameLayer = BaseLayer.extend
 					@touch()
 					return true
 				, @
+		if cc.sys.capabilities.hasOwnProperty "keyboard"
+			cc.eventManager.addListener
+				event: cc.EventListener.KEYBOARD
+				onKeyPressed: (key, evnet)->
+					cc.log 'key pressed ' + key
+				onKeyReleased: (key, event)->
+					cc.log "key pressed #{key}"
+					if key is 6
+						cc.LoaderScene.preload g_startScene, ()->
+							cc.director.runScene new StartScene()
+			, @
 
 	createUI: ()->
 		#云层
@@ -74,6 +85,16 @@ GameLayer = BaseLayer.extend
 			x: @_winSize.width * 0.5
 			y: @_winSize.height * 0.8
 		@addChild @_label, 10
+
+		bestScore = cc.sys.localStorage.getItem("best") or 0
+
+		@bestLabel = new cc.LabelTTF "Best: #{bestScore}", "Ariel", 40
+		@bestLabel.attr
+			anchorX: 0
+			anchory: 1
+			x: 10
+			y: @_winSize.height - 40
+		@addChild @bestLabel
 
 		# 方块
 		for i in [0...5]
@@ -121,7 +142,7 @@ GameLayer = BaseLayer.extend
 						else
 							share(0)
 					else
-						cc.log '实现原生分享'
+						@takeScreenshot()
 		, @
 		@addChild shareBtn, 5
 
@@ -129,7 +150,7 @@ GameLayer = BaseLayer.extend
 	touch: ()->
 		if @_gameOver
 			return
-		cc.audioEngine.playEffect "res/touch.mp3", true
+		cc.audioEngine.playEffect "res/touch.mp3"
 
 		@block.stopAllActions()
 		@block.state = BlockState.UP
@@ -157,6 +178,11 @@ GameLayer = BaseLayer.extend
 		Block.cleanCache()
 		Column.cleanCache()
 		Brick.cleanCache()
+		if cc.sys.isNative
+			jsb.reflection.callStaticMethod G.JAVA_CLASS,
+				"hideBannerAd", "()V"
+			jsb.reflection.callStaticMethod G.JAVA_CLASS,
+				"hideSpotAd", "()V"
 		@_super()
 
 	update: (dt)->
@@ -218,14 +244,14 @@ GameLayer = BaseLayer.extend
 		if @_bricks.length > G.BRICK_NUM
 			return
 		num = getRandomInt(0, 9)
-		if num < 3
+		if num < 2
 			type = BrickType[getRandomInt(0, BrickType.length-1)]
 		else
 			type = BrickType[8]
 		brick = Brick.getOrCreate(type)
 		pos = cc.p(@_winSize.width + 100, @_winSize.height * 0.7)
-		randomX = getRandomInt(400, 700)
-		randomY = getRandomInt(@_winSize.height/2, @_winSize.height * 0.9)
+		randomX = getRandomInt(200, 700)
+		randomY = getRandomInt(@_winSize.height/3, @_winSize.height * 0.9)
 		if @_bricks.length > 0
 			pos = @_bricks[@_bricks.length-1].getPosition()
 		pos.x += randomX
@@ -323,6 +349,12 @@ GameLayer = BaseLayer.extend
 		@shareBtn.runAction cc.sequence cc.delayTime(0.5),
 			cc.moveTo(0.3, cc.p(@_winSize.width*0.7, @_winSize.height*0.45))
 
+		bestScore = cc.sys.localStorage.getItem("best") or 0
+		cc.log bestScore
+		if @_score > bestScore 
+			cc.log '新纪录'
+			cc.sys.localStorage.setItem("best", @_score)
+
 		@_label.visible = false
 		scoreLabel = new cc.LabelBMFont("#{@_score}",  "res/font.fnt");
 		scoreLabel.x = 170
@@ -335,6 +367,23 @@ GameLayer = BaseLayer.extend
 		timeLabel.y = 45
 		timeLabel.anchorX = 0
 		@scoreBoard.addChild timeLabel
+		if cc.sys.isNative
+			jsb.reflection.callStaticMethod G.JAVA_CLASS,
+				"showBannerAd", "()V"
+			jsb.reflection.callStaticMethod G.JAVA_CLASS,
+				"showSpotAd", "()V"
+
+	takeScreenshot: ()->
+		cc.log 'takeScreenshot'
+		texture = new cc.RenderTexture @_winSize.width, @_winSize.height
+		texture.setPosition cc.p(@_winSize.width/2, @_winSize.height/2)
+		texture.begin()
+		cc.director.getRunningScene().visit()
+		texture.end()
+		texture.saveToFile("screenshot.png", cc.IMAGE_FORMAT_PNG)
+		if cc.sys.isNative
+			jsb.reflection.callStaticMethod G.JAVA_CLASS,
+			"share", "(Ljava/lang/String;)V", "我在玩空降小色块,成功解救了#{@_score}个小方块,麽麽哒~"
 
 
 GameScene = cc.Scene.extend

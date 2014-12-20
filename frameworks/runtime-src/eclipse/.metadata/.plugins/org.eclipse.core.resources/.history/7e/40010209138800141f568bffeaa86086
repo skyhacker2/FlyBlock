@@ -1,0 +1,23 @@
+package com.eleven.game.libpluginutils.ads;
+
+public class YoumiAdManager implements IAdManager {
+
+	@Override
+	public boolean init() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void showBannerAd() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hideBannerAd() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

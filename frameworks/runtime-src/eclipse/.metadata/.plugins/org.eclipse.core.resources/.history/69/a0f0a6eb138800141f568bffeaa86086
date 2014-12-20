@@ -1,0 +1,9 @@
+package com.eleven.game.libpluginutils.ads;
+
+public interface IAdManager {
+	public boolean init();
+	
+	public void showBannerAd();
+	
+	public void hideBannerAd();
+}

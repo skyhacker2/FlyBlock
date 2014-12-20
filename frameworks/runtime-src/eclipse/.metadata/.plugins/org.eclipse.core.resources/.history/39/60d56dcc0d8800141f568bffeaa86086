@@ -1,0 +1,7 @@
+package com.eleven.game.libpluginutils.analytics;
+
+public interface IAnalytics {
+	
+	
+
+}

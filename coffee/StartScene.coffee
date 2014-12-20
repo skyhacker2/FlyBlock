@@ -21,6 +21,17 @@ StartLayer = BaseLayer.extend
 		# , @
 		# @addChild startBtn
 
+		if cc.sys.capabilities.hasOwnProperty "keyboard"
+			cc.eventManager.addListener
+				event: cc.EventListener.KEYBOARD
+				onKeyPressed: (key, evnet)->
+					cc.log 'key pressed ' + key
+				onKeyReleased: (key, event)->
+					cc.log "key pressed #{key}"
+					if key is 6
+						cc.director.end()
+			, @
+
 		@addButton
 			normalImage: "res/start_btn.png"
 			x: @_winSize.width * 0.8
@@ -54,7 +65,8 @@ StartLayer = BaseLayer.extend
 				callback: (sender, type)->
 					switch type
 						when ccui.Widget.TOUCH_ENDED
-							cc.log 'rate'
+							jsb.reflection.callStaticMethod G.JAVA_CLASS,
+								"rateApp", "()V"
 				target: @
 
 

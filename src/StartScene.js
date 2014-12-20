@@ -8,6 +8,20 @@ StartLayer = BaseLayer.extend({
   ctor: function() {
     this._super();
     this.setBackground("res/start_page.png");
+    if (cc.sys.capabilities.hasOwnProperty("keyboard")) {
+      cc.eventManager.addListener({
+        event: cc.EventListener.KEYBOARD,
+        onKeyPressed: function(key, evnet) {
+          return cc.log('key pressed ' + key);
+        },
+        onKeyReleased: function(key, event) {
+          cc.log("key pressed " + key);
+          if (key === 6) {
+            return cc.director.end();
+          }
+        }
+      }, this);
+    }
     this.addButton({
       normalImage: "res/start_btn.png",
       x: this._winSize.width * 0.8,
@@ -46,7 +60,7 @@ StartLayer = BaseLayer.extend({
         callback: function(sender, type) {
           switch (type) {
             case ccui.Widget.TOUCH_ENDED:
-              return cc.log('rate');
+              return jsb.reflection.callStaticMethod(G.JAVA_CLASS, "rateApp", "()V");
           }
         },
         target: this

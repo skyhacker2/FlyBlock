@@ -22,7 +22,7 @@ TeachLayer = BaseLayer.extend
 				onMouseDown: (event)=> 
 					if @index is @teachSprites.length-1
 						if event._x > @_winSize.width * 0.3 and event._x < @_winSize.width * 0.6
-							MyLoaderScene.preload g_gameScene, ()->
+							cc.LoaderScene.preload g_gameScene, ()->
 								cc.director.runScene new GameScene()
 					if event._x > @_winSize.width/2
 						@slideToNext()

@@ -70,7 +70,7 @@ cc.game.onStart = function(){
         searchPaths.push('res');
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
-    cc.director.setAnimationInterval(1.0 / 30);
+    cc.director.setAnimationInterval(1.0 / 60);
 
     cc.view.resizeWithBrowserSize(true);
     //load resources
