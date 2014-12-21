@@ -142,6 +142,9 @@ GameLayer = BaseLayer.extend
 						else
 							share(0)
 					else
+						if cc.sys.isNative
+							jsb.reflection.callStaticMethod G.JAVA_CLASS,
+								"hideSpotAd", "()V"
 						@takeScreenshot()
 		, @
 		@addChild shareBtn, 5
@@ -336,6 +339,7 @@ GameLayer = BaseLayer.extend
 		block = @block = Block.getOrCreate type
 		block.setPosition @_winSize.width/2, @_winSize.height
 		block.state = BlockState.DOWN
+		@time = 0
 		if not block.getParent()
 			@addChild block, 2
 

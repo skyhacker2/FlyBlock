@@ -48,7 +48,7 @@ TeachLayer = BaseLayer.extend({
             pos = touch.getLocation();
             if (_this.index === _this.teachSprites.length - 1) {
               if (pos.x > _this._winSize.width * 0.3 && pos.x < _this._winSize.width * 0.6) {
-                MyLoaderScene.preload(g_gameScene, function() {
+                cc.LoaderScene.preload(g_gameScene, function() {
                   return cc.director.runScene(new GameScene());
                 });
               }

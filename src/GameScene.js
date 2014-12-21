@@ -147,6 +147,9 @@ GameLayer = BaseLayer.extend({
                 return share(0);
               }
             } else {
+              if (cc.sys.isNative) {
+                jsb.reflection.callStaticMethod(G.JAVA_CLASS, "hideSpotAd", "()V");
+              }
               return _this.takeScreenshot();
             }
         }
@@ -391,6 +394,7 @@ GameLayer = BaseLayer.extend({
     block = this.block = Block.getOrCreate(type);
     block.setPosition(this._winSize.width / 2, this._winSize.height);
     block.state = BlockState.DOWN;
+    this.time = 0;
     if (!block.getParent()) {
       return this.addChild(block, 2);
     }

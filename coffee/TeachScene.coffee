@@ -40,7 +40,7 @@ TeachLayer = BaseLayer.extend
 					pos = touch.getLocation()
 					if @index is @teachSprites.length-1
 						if pos.x > @_winSize.width * 0.3 and pos.x < @_winSize.width * 0.6
-							MyLoaderScene.preload g_gameScene, ()->
+							cc.LoaderScene.preload g_gameScene, ()->
 								cc.director.runScene new GameScene()
 					if pos.x > @_winSize.width/2
 						@slideToNext()
