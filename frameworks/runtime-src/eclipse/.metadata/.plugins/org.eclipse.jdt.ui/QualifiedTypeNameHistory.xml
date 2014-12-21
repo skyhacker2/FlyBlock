@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="org.cocos2dx.lib.Cocos2dxSound"/>
 <fullyQualifiedTypeName name="org.cocos2dx.lib.Cocos2dxSound.DoPlayEffectThread"/>
+<fullyQualifiedTypeName name="org.cocos2dx.javascript.AppActivity"/>
+<fullyQualifiedTypeName name="org.cocos2dx.javascript.Utils"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.umeng.analytics.AnalyticsConfig"/>
+<fullyQualifiedTypeName name="com.umeng.analytics.MobclickAgent"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.analytics.IAnalytics"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.analytics.UmengAnalytics"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.facade.Utils"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.facade.Facade"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.ads.IAdManager"/>
+<fullyQualifiedTypeName name="android.widget.FrameLayout"/>
+<fullyQualifiedTypeName name="com.eleven.game.libpluginutils.ads.YoumiAdManager"/>
+<fullyQualifiedTypeName name="android.os.Handler"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
 </qualifiedTypeNameHistroy>

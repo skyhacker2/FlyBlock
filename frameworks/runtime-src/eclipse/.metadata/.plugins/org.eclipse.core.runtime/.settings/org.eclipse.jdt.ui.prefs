@@ -1,4 +1,4 @@
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"/>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="android.os.Handler"><rhs name\="android.os.Handler"/></lhs><lhs name\="com.eleven.game.libpluginutils.analytics.IAnalytics"><rhs name\="com.eleven.game.libpluginutils.analytics.UmengAnalytics"/></lhs><lhs name\="com.eleven.game.libpluginutils.facade.Utils"><rhs name\="com.eleven.game.libpluginutils.facade.Utils"/></lhs><lhs name\="com.eleven.game.libpluginutils.ads.IAdManager"><rhs name\="com.eleven.game.libpluginutils.ads.YoumiAdManager"/></lhs></history>
 content_assist_number_of_computers=12
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
