@@ -9504,3 +9504,128 @@ Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is ou
 	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
 	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder$JarBuilder.addFile(PostCompilerBuilder.java:783)
 	... 20 more
+!SESSION 2014-12-22 09:39:57.291 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.8.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=zh_CN
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/eleven/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/eleven/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-22 09:40:16.809
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-12-22 09:40:31.116
+!MESSAGE Failed to write jar file /Users/eleven/projects/cocos2d-js-projects/libPluginUtils/bin/libpluginutils.jar
+!STACK 0
+com.android.sdklib.build.ApkCreationException: Failed to add L/libPluginUtils/bin/classes/com/eleven/game/libpluginutils/ads/IAdManager.class
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder$JarBuilder.addFile(PostCompilerBuilder.java:787)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:905)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeLibraryPackage(PostCompilerBuilder.java:878)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.build(PostCompilerBuilder.java:400)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:726)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:199)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:239)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:292)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:295)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:351)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:374)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/libPluginUtils/bin/classes/com/eleven/game/libpluginutils/ads/IAdManager.class'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder$JarBuilder.addFile(PostCompilerBuilder.java:783)
+	... 20 more
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-12-22 09:40:31.264
+!MESSAGE Failed to write jar file /Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/js-bindings/cocos2d-x/cocos/platform/android/java/bin/libcocos2dx.jar
+!STACK 0
+com.android.sdklib.build.ApkCreationException: Failed to add L/libcocos2dx/bin/classes/org/cocos2dx/lib/Cocos2dxAccelerometer.class
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder$JarBuilder.addFile(PostCompilerBuilder.java:787)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:905)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeClassFilesIntoJar(PostCompilerBuilder.java:902)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.writeLibraryPackage(PostCompilerBuilder.java:878)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder.build(PostCompilerBuilder.java:400)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:726)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:199)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:239)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:292)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:295)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:351)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:374)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/libcocos2dx/bin/classes/org/cocos2dx/lib/Cocos2dxAccelerometer.class'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.internal.build.builders.PostCompilerBuilder$JarBuilder.addFile(PostCompilerBuilder.java:783)
+	... 18 more
+
+!ENTRY org.eclipse.ui 2 2 2014-12-22 09:40:49.491
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+!SESSION 2014-12-22 11:01:09.306 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=zh_CN
+Framework arguments:  -product com.android.ide.eclipse.adt.package.adtproduct -product com.android.ide.eclipse.adt.package.adtproduct -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/eleven/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.adtproduct -product com.android.ide.eclipse.adt.package.adtproduct -data /Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/eclipse -product com.android.ide.eclipse.adt.package.adtproduct -keyring /Users/eleven/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-12-22 11:01:12.082
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2014-12-22 11:01:16.661
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-12-22 11:01:26.216
+!MESSAGE Exception in checkAndLoadTargetData.
+!STACK 0
+java.lang.UnsupportedClassVersionError: Unsupported major.minor version 51.0
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClassCond(ClassLoader.java:637)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:621)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:471)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidJarLoader.defineAndCacheClass(AndroidJarLoader.java:336)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidJarLoader.findClass(AndroidJarLoader.java:312)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidTargetParser.collectPermissions(AndroidTargetParser.java:336)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidTargetParser.run(AndroidTargetParser.java:107)
+	at com.android.ide.eclipse.adt.internal.sdk.Sdk$6.run(Sdk.java:712)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-12-22 11:01:26.220
+!MESSAGE Parsing Data for android-21 failed
+!STACK 0
+java.lang.UnsupportedClassVersionError: Unsupported major.minor version 51.0
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClassCond(ClassLoader.java:637)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:621)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:471)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidJarLoader.defineAndCacheClass(AndroidJarLoader.java:336)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidJarLoader.findClass(AndroidJarLoader.java:312)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidTargetParser.collectPermissions(AndroidTargetParser.java:336)
+	at com.android.ide.eclipse.adt.internal.sdk.AndroidTargetParser.run(AndroidTargetParser.java:107)
+	at com.android.ide.eclipse.adt.internal.sdk.Sdk$6.run(Sdk.java:712)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.ui 2 2 2014-12-22 11:16:29.146
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
