@@ -54,7 +54,13 @@ res = {
   font_fnt: "res/font.fnt",
   weixin_arrow: "res/weixin_arrow.png",
   touch_mp3: "res/touch.MP3",
-  score_mp3: "res/score.mp3"
+  score_mp3: "res/score.mp3",
+  fly_blue_plist: "res/fly_blue.plist",
+  fly_green_plist: "res/fly_green.plist",
+  fly_purple_plist: "res/fly_purple.plist",
+  fly_red_plist: "res/fly_red.plist",
+  fly_yellow_plist: "res/fly_yellow.plist",
+  brick_plist: "res/brick.plist"
 };
 
 g_resources = [];
@@ -70,4 +76,4 @@ g_startScene = [res.start_page_bg, res.start_btn, res.rate_btn, res.teach_btn];
 
 g_teachScene = [res.teach1, res.teach2, res.teach3, res.teach4, res.teach5, res.teach6, res.teach7, res.teach8];
 
-g_gameScene = [res.level_bg1, res.level_bg2, res.level_bg3, res.level_cloud1, res.level_cloud2, res.level_cloud3, res.column_blue, res.column_brown, res.column_gray, res.column_green, res.column_orange, res.column_purple, res.column_red, res.column_yellow, res.fly_blue, res.fly_brown, res.fly_gray, res.fly_green, res.fly_orange, res.fly_purple, res.fly_red, res.fly_yellow, res.fly_blue2, res.fly_brown2, res.fly_gray2, res.fly_green2, res.fly_orange2, res.fly_purple2, res.fly_red2, res.fly_yellow2, res.brick, res.again_btn, res.share_btn, res.score_board, res.font, res.font_fnt, res.weixin_arrow, res.touch_mp3, res.score_mp3];
+g_gameScene = [res.level_bg1, res.level_bg2, res.level_bg3, res.level_cloud1, res.level_cloud2, res.level_cloud3, res.column_blue, res.column_green, res.column_purple, res.column_red, res.column_yellow, res.fly_blue, res.fly_green, res.fly_purple, res.fly_red, res.fly_yellow, res.fly_blue2, res.fly_green2, res.fly_purple2, res.fly_red2, res.fly_yellow2, res.brick, res.again_btn, res.share_btn, res.score_board, res.font, res.font_fnt, res.weixin_arrow, res.touch_mp3, res.score_mp3, res.fly_blue_plist, res.fly_green_plist, res.fly_purple_plist, res.fly_red_plist, res.fly_yellow_plist, res.brick_plist];

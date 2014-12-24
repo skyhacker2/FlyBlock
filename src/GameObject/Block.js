@@ -12,10 +12,26 @@ Block = GameObject.extend({
   _className: "Block",
   state: BlockState.NONE,
   ctor: function(type) {
-    this._super();
+    this._super("#" + type.textureName + "0001.png");
     this.type = type;
-    this.initWithFile(type.textureName);
-    return this.invincible = true;
+    this.flippedX = true;
+    this.invincible = true;
+    this.animation = null;
+    this.initAnimation();
+    return this.play();
+  },
+  initAnimation: function() {
+    var animFrames, animation, frame, i, str, _i;
+    animFrames = [];
+    for (i = _i = 1; _i <= 12; i = ++_i) {
+      str = this.type.textureName + (i < 10 ? "000" + i : "00" + i) + ".png";
+      frame = cc.spriteFrameCache.getSpriteFrame(str);
+      animFrames.push(frame);
+    }
+    animation = new cc.Animation(animFrames, 1.0 / 12.0);
+    animation.setLoops(10000);
+    animation.setRestoreOriginalFrame(true);
+    return this.animation = animation;
   },
   destroy: function() {
     this.visible = false;
@@ -25,9 +41,15 @@ Block = GameObject.extend({
   setState: function(state) {
     return this.state = state;
   },
+  play: function() {
+    return this.runAction(cc.animate(this.animation));
+  },
   changeType: function(type) {
+    var frame;
     this.type = type;
-    return this.setTexture(type.textureName);
+    frame = cc.spriteFrameCache.getSpriteFrame("" + type.textureName + "0001.png");
+    this.setSpriteFrame(frame);
+    return this.play();
   }
 });
 

@@ -8,10 +8,25 @@ Block = GameObject.extend
 	state: BlockState.NONE
 
 	ctor: (type)->
-		@_super()
+		@_super("##{type.textureName}0001.png")
 		@type = type
-		@initWithFile type.textureName
+		@flippedX = true
+		#@initWithFile "##{type.textureName}0001.png"
 		@invincible = true
+		@animation = null
+		@initAnimation()
+		@play()
+
+	initAnimation: ()->
+		animFrames = []
+		for i in [1..12]
+			str = @type.textureName + (if i < 10 then "000" + i else "00" + i) + ".png"
+			frame = cc.spriteFrameCache.getSpriteFrame(str)
+			animFrames.push frame
+		animation = new cc.Animation animFrames, 1.0 / 12.0
+		animation.setLoops 10000
+		animation.setRestoreOriginalFrame true
+		@animation = animation
 
 	destroy: ()->
 		@visible = false
@@ -21,9 +36,14 @@ Block = GameObject.extend
 	setState: (state)->
 		@state = state
 
+	play: ()->
+		@runAction cc.animate @animation
+
 	changeType: (type)->
 		@type = type
-		@setTexture type.textureName
+		frame = cc.spriteFrameCache.getSpriteFrame "#{type.textureName}0001.png"
+		@setSpriteFrame frame
+		@play()
 
 Block.getOrCreate = (type)->
 	block = null

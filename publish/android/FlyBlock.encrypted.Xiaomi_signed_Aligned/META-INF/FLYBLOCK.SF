@@ -1,0 +1,395 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest-Main-Attributes: NdvTTYSDLv+xfCdISs2OUVv3OXY=
+Created-By: 1.6.0_37 (Sun Microsystems Inc.)
+SHA1-Digest-Manifest: pYVIjvht/CstQlykiEew6JdLZo4=
+
+Name: assets/libprotectClass_x86.so
+SHA1-Digest: koi1r7tOYSpEl67gWgq/6NmG/O8=
+
+Name: assets/res/fly_orange.png
+SHA1-Digest: VoWAdHw+1Zqr+DNlB5aXiaV3ogU=
+
+Name: assets/src/GameObject/Brick.jsc
+SHA1-Digest: jpDfAELc+277zfF3OBz39WlmwIc=
+
+Name: assets/script/jsb_cocosbuilder.jsc
+SHA1-Digest: 2j5OFKdf0vtJ3318EukH7zcLVgY=
+
+Name: assets/res/teach8.png
+SHA1-Digest: +OkCMWxRwcGb14849C7lbyXoPas=
+
+Name: assets/res/column_blue.png
+SHA1-Digest: cVuRArPQTtESIbrs4hvIFygr2aM=
+
+Name: res/drawable-mdpi-v4/ic_launcher.png
+SHA1-Digest: 3LjWSTDaK+LzxXCMhp8d8TFwiHg=
+
+Name: assets/script/jsb_cocos2d_constants.jsc
+SHA1-Digest: 0mhSux+hlppC6h8HAVAP00JA/Lg=
+
+Name: assets/res/fly_brown.png
+SHA1-Digest: rDZJ5DsOl2M7TRdRJUZ0diOx4+k=
+
+Name: assets/res/level_cloud2.png
+SHA1-Digest: 1qzyu9YLOWHfHS3vJ9rARISv6kg=
+
+Name: assets/script/jsb.jsc
+SHA1-Digest: 6HcOMF81zX1aM3mSV6nqbM87ZHY=
+
+Name: assets/res/brick.png
+SHA1-Digest: XYPjZByBlpb7e9Ez2OLimyY4ddI=
+
+Name: assets/script/jsb_opengl_constants.jsc
+SHA1-Digest: LBLQRTTosnyea/jBalbooIVBj8Q=
+
+Name: assets/project.json
+SHA1-Digest: LI6cX0Ka/rilYIB1aTNxuEbZ8Mk=
+
+Name: assets/script/jsb_cocos2d_studio.jsc
+SHA1-Digest: kjk7kYVEtrJIecAHyIGXi9rT3jY=
+
+Name: assets/script/jsb_loaders.jsc
+SHA1-Digest: +gmmyksKsJ2+N5DJdFgA9c26Das=
+
+Name: assets/src/ChipmunkLayer.jsc
+SHA1-Digest: 8+amd1LVJxaWIYjNcurr0R2Z5Fg=
+
+Name: assets/res/start_page.png
+SHA1-Digest: F6sTHlbSVONbDuPXCmQNwpNRXMA=
+
+Name: res/drawable-hdpi-v4/icon.png
+SHA1-Digest: bnBxnSF2Vw9+2B5EETalfx4fOJE=
+
+Name: assets/res/touch4.ogg
+SHA1-Digest: KiIPTrwbQLG3PvUy28hT03nw9aU=
+
+Name: assets/res/level_bg3.png
+SHA1-Digest: qAKjq9JQHq4cBUSgDF5xwMs7jn0=
+
+Name: assets/script/debugger/actors/script.jsc
+SHA1-Digest: zmSI/Sre1jfz/a3Gsan8KuJBpdw=
+
+Name: assets/script/jsb_property_impls.jsc
+SHA1-Digest: 3FiADXMJZhTJYMLgbIRfbC/T/zk=
+
+Name: assets/libqupc.so
+SHA1-Digest: 5++Wqrb410EJDkF9zv4AZRl94fQ=
+
+Name: assets/src/Config/Config.jsc
+SHA1-Digest: KIuLnTBUqE3gaONP6309AekNfZg=
+
+Name: assets/libprotectClass.so
+SHA1-Digest: T4HlE1dT2oBeFygw/yWdAK6a+Ng=
+
+Name: assets/script/jsb_opengl.jsc
+SHA1-Digest: mDDV5Z7vEw2k0QYL+FYcCnVkB2M=
+
+Name: assets/script/jsb_cocos2d.jsc
+SHA1-Digest: 5uXu3PkDhsxTtrQM2dNgUJvRxqI=
+
+Name: assets/res/level_bg2.png
+SHA1-Digest: gxu4qxGKbQAImBdzCFvHz6Ixn+k=
+
+Name: lib/armeabi/libcocos2djs.so
+SHA1-Digest: QnKLGiSLKdJK3j5CbiEt2r6y+w0=
+
+Name: assets/res/favicon.png
+SHA1-Digest: /TnBhHwbC0/gFr07x9aGrz2t3/k=
+
+Name: assets/res/CloseSelected.png
+SHA1-Digest: +wVMuTebflJoAtsyyYFcfFoZci4=
+
+Name: assets/res/column_yellow.png
+SHA1-Digest: kSOw6FNb5HnoGRAE8PdT12sr/q8=
+
+Name: assets/script/debugger/transport.jsc
+SHA1-Digest: rkxe6tUMMomlQwH89DmU+0QY1DU=
+
+Name: resources.arsc
+SHA1-Digest: eLX3nR9AOwjYV3C5+QAj7L29crw=
+
+Name: assets/src/Config/BlockType.jsc
+SHA1-Digest: Osgy5yY4TG/dPANlc/hBOXAZyw4=
+
+Name: assets/res/start_page_bg.png
+SHA1-Digest: NMjnE7AgIv4LGWA0EiLAaFT2f68=
+
+Name: assets/src/libs/Wtk.jsc
+SHA1-Digest: d7D5MmLkhWjsmy0gFtGqJ4k/Z3o=
+
+Name: assets/res/share_btn.png
+SHA1-Digest: upwMr0FRHGzn50vUsmOHY48t608=
+
+Name: assets/config.json
+SHA1-Digest: Iu9+BZOlM95UinnIVifdzoNsELA=
+
+Name: AndroidManifest.xml
+SHA1-Digest: WiH4zTZgnLyqtZ6FRzJVKasX/Zw=
+
+Name: assets/res/font.png
+SHA1-Digest: BdUoMcMm/Wgq+pePBrQ2pbD/gXw=
+
+Name: assets/res/font.fnt
+SHA1-Digest: YQeOeDDqEbHHsb/OCfw6u5fG0tA=
+
+Name: assets/src/Resources.jsc
+SHA1-Digest: beAm2enmxJwtT+Kmj7sD5rYdg5o=
+
+Name: assets/script/jsb_ext_create_apis.jsc
+SHA1-Digest: dJuAAUhf+RaujokJk4zmZfTnPxY=
+
+Name: assets/script/jsb_create_apis.jsc
+SHA1-Digest: ui69/05P3spy43gV58hub942HYs=
+
+Name: assets/src/ChipmunkTest.jsc
+SHA1-Digest: +a+QIQrxZ/hC6U67dWclzcnFiKA=
+
+Name: assets/res/fly_red.png
+SHA1-Digest: E0A0tWMcL2utKLiQJMXR0NOZ8o0=
+
+Name: assets/res/fly_brown2.png
+SHA1-Digest: yIDGQSORK/guMMBcdM9cMTJiSpQ=
+
+Name: assets/res/level_bg1.png
+SHA1-Digest: bUkLO9q7TIhpDnA9HcykOgdMBOw=
+
+Name: assets/script/jsb_cocos2d_ui.jsc
+SHA1-Digest: fneh4DxSyX0QZVHzYLirbQhYdvU=
+
+Name: assets/res/CloseNormal.png
+SHA1-Digest: H27uRzSM4nFbkHqyp+hqJuUTy6I=
+
+Name: assets/src/GameScene.jsc
+SHA1-Digest: yIlBYzOzgXxFposF4v8Tn7KauHI=
+
+Name: assets/res/touch2.mp3
+SHA1-Digest: yVwoJ28tUbM3hLP5hb/DEwfGkiQ=
+
+Name: assets/res/fly_purple.png
+SHA1-Digest: kzlz6UJk9GkKkxlQcQfUBV3UcAA=
+
+Name: classes.dex
+SHA1-Digest: jWZ0X32PbgFpGR5CYpU2dEX1Oeo=
+
+Name: assets/src/GameObject/FloatBlock.jsc
+SHA1-Digest: 3tsr1ipZZz7KGZCEzTDdG1S02zQ=
+
+Name: assets/script/debugger/DevToolsUtils.jsc
+SHA1-Digest: fVfFvULk/EOmAs3cOvBAjUnsC1o=
+
+Name: assets/res/fly_green.png
+SHA1-Digest: WsklFdf3ZkqMhm4NtOI6VSAR6EM=
+
+Name: assets/src/libs/ShareUI.jsc
+SHA1-Digest: Z+a/KBu48ZD9dbSznX/qlaST0Bs=
+
+Name: assets/res/teach1.png
+SHA1-Digest: xtiwPDBxP2nyGu6ROH6fnKmtfi0=
+
+Name: assets/res/fly_yellow2.png
+SHA1-Digest: zdS8edcfgeo3q+5EEI5LC55mW2c=
+
+Name: assets/res/start_btn.png
+SHA1-Digest: L4AEuM53RVxlkXXe6dmR10uBqOw=
+
+Name: res/drawable-ldpi-v4/icon.png
+SHA1-Digest: MeW6NyVG+XEr9/uRmSoER57M43o=
+
+Name: assets/src/MyLoaderScene.jsc
+SHA1-Digest: jKYmhVaqHfH4/zHyPNMxM33/q8Q=
+
+Name: assets/src/GameObject/Column.jsc
+SHA1-Digest: bzqypnEJs0TFA/CRX6nkEJRRC20=
+
+Name: assets/res/fly_green2.png
+SHA1-Digest: jHgkeEHDqOpYD6pf3ika68EY574=
+
+Name: assets/res/teach3.png
+SHA1-Digest: Frd+ax0z2Tdpbszp1ZHuOSFJM8c=
+
+Name: assets/res/column_brown.png
+SHA1-Digest: WLYmBdv6cb8wJHN+Invs4uZic5c=
+
+Name: assets/src/Config/ColumnType.jsc
+SHA1-Digest: C0ruxoSiMBc26NU1sgrXr5zhlR8=
+
+Name: assets/src/Config/BrickType.jsc
+SHA1-Digest: EjVwF/LUuSn74Ru9fCV16ZhZ6CU=
+
+Name: assets/script/debugger/README.md
+SHA1-Digest: LRfuNO1Wezs9v3/4H7uMnvTPxF8=
+
+Name: assets/res/fly_purple2.png
+SHA1-Digest: FKuB9jhjCCUTHs4eT+w8TnYs1yQ=
+
+Name: assets/src/StartScene.jsc
+SHA1-Digest: EIic2Od5r0pHYxa1MvjQ/lZxdi0=
+
+Name: assets/res/mute.mp3
+SHA1-Digest: TuzEpDp4viFV3TtALjp/PxHRaE8=
+
+Name: assets/res/fly_gray.png
+SHA1-Digest: u3DRnN/0LYcABkbp/yXnbXlt+iQ=
+
+Name: assets/src/Utils.jsc
+SHA1-Digest: JHn4l2uhgSZIRgIwXK+z3tn43Ts=
+
+Name: assets/script/jsb_debugger.jsc
+SHA1-Digest: NqZAQf65EVi+cFIvuyEJO0z3bV4=
+
+Name: assets/res/column_green.png
+SHA1-Digest: XgldgmLaGTJG3btKjY5n3jCx1NE=
+
+Name: assets/res/again_btn.png
+SHA1-Digest: 5wy5MRW84GulitxbFMWkPE2jfeQ=
+
+Name: assets/script/debugger/main.jsc
+SHA1-Digest: wKLhC5sqTkryKhGzOVw8STFekww=
+
+Name: assets/res/score.mp3
+SHA1-Digest: MNwl5D6Kz93nBVfFzEP0s2tUSTU=
+
+Name: assets/res/teach2.png
+SHA1-Digest: XF5D0rx72WuN0L6y1+PKGuUM4MM=
+
+Name: assets/script/debugger/core/promise.jsc
+SHA1-Digest: hxfsjC0P8fnsTFUOHf/fJedwyjI=
+
+Name: assets/res/teach4.png
+SHA1-Digest: G/pJKUQyevRlsI/xr+7sCJHya+s=
+
+Name: assets/res/favicon.ico
+SHA1-Digest: CLw39LAy+R+Dbrvn/bfRYE2I184=
+
+Name: assets/src/BaseLayer.jsc
+SHA1-Digest: pzS6fckubz9XhfO3CE6Fr8bu9M0=
+
+Name: assets/res/level_cloud3.png
+SHA1-Digest: DGO8vBBSTIgLEcq4x6lVBH2EBz0=
+
+Name: assets/res/HoboStd.otf
+SHA1-Digest: +HkHi+ZgHvOzy34vVJu4PbKZ7Ow=
+
+Name: assets/src/GameObject/GameObject.jsc
+SHA1-Digest: tCeav1lAq2Ba2buZOViqYV2mD2M=
+
+Name: assets/res/fly_blue.png
+SHA1-Digest: FgNo4vToab0LTxgxKPeoqbtKVcU=
+
+Name: res/drawable-xhdpi-v4/icon.png
+SHA1-Digest: W8BxfvyALiw8R7XVbs69jX/5bhA=
+
+Name: assets/src/TeachScene.jsc
+SHA1-Digest: Son0s/VIkbToHxouVlXfjfl6Wu0=
+
+Name: assets/script/jsb_boot.jsc
+SHA1-Digest: BSytY2aEla2HlVwTewkqfETMqUE=
+
+Name: assets/res/teach6.png
+SHA1-Digest: kGVDLDeTzvRx4L4sexT1mghSSUo=
+
+Name: assets/res/level_cloud1.png
+SHA1-Digest: dsHR+76ipkOzucO6/wV8m/z1u40=
+
+Name: assets/res/teach7.png
+SHA1-Digest: H1HztNp5IazA09dOkkszU7I3zeY=
+
+Name: assets/script/jsb_deprecated.jsc
+SHA1-Digest: c17NZw8PooSvbzhaAxvlvI+/5DI=
+
+Name: res/drawable-xhdpi-v4/ic_launcher.png
+SHA1-Digest: A33f/6Xb1ogZl4jZlmsi6//HTbE=
+
+Name: assets/res/end_page.png
+SHA1-Digest: p7Kt1rZJyOnX0WfIyPW/av+ktGU=
+
+Name: assets/script/jsb_cocos2d_extension.jsc
+SHA1-Digest: MtxFGD6DVYbEWvQjDO+TG3A76EQ=
+
+Name: assets/res/fly_yellow.png
+SHA1-Digest: Y3Kx9JZ6hj5FEzsF5pIQEAwdMFU=
+
+Name: assets/res/HelloWorld.png
+SHA1-Digest: qnfhdznOvseLxxPkURlUCIbcKrk=
+
+Name: assets/res/touch4.xmp
+SHA1-Digest: ErlvcfgMLXDMHBGE4PhPgv2kQF4=
+
+Name: assets/res/score_board.png
+SHA1-Digest: 5UA3F5nalIA+P5D4GrvKkQYX8so=
+
+Name: assets/res/weixin_arrow.png
+SHA1-Digest: bA3NYFsdgN272Yu2k1dZfuG4Hkg=
+
+Name: assets/script/jsb_property_apis.jsc
+SHA1-Digest: keVld7RPYHJL79D7B2g1J+O4myc=
+
+Name: assets/res/stop.png
+SHA1-Digest: 7N3D/xMrozWmc4MbvDE0a6knII8=
+
+Name: res/drawable-mdpi-v4/icon.png
+SHA1-Digest: bokvWMgJ/vqtqHjD4C9bhRHtK3Y=
+
+Name: assets/res/column_red.png
+SHA1-Digest: JkcqqbD2TlQ/Qof6FHUKfw4Zj9o=
+
+Name: res/drawable-hdpi-v4/ic_launcher.png
+SHA1-Digest: tYiGDUvOwHeh/pZhFgJ5InuO0zk=
+
+Name: assets/res/column_orange.png
+SHA1-Digest: A/FqeI1zAJ1QvgwwyaeuU1G3Dbc=
+
+Name: assets/res/touch.mp3
+SHA1-Digest: JGZ5tx8vBlUuklw5IBFEtC8X/GA=
+
+Name: assets/script/jsb_pool.jsc
+SHA1-Digest: DCO0ZP5pP2+xSL9pG84Q0ii8Xwk=
+
+Name: assets/script/debugger/actors/root.jsc
+SHA1-Digest: sHtWUjWPvFgdDoB5cmXpZu8pXI8=
+
+Name: assets/src/libs/extends.jsc
+SHA1-Digest: QqacD//zoKydBBjgoRV7AUNTGfU=
+
+Name: assets/script/jsb_chipmunk_constants.jsc
+SHA1-Digest: dmtjJ/ITOSs+pWqqjLCL4XXROE0=
+
+Name: assets/src/GameObject/Block.jsc
+SHA1-Digest: IecPlXoUGngaN7o+pexDz7n6FdI=
+
+Name: assets/res/fly_orange2.png
+SHA1-Digest: Tw8QsUGHtNOVTU1OOT8Cfs13KLQ=
+
+Name: assets/res/teach_btn.png
+SHA1-Digest: ynq29rOXrKnmDHTWs2MMlX5LlxI=
+
+Name: assets/res/rate_btn.png
+SHA1-Digest: Imuv7kuTsS+jtJA71d36kED44gY=
+
+Name: assets/res/fly_gray2.png
+SHA1-Digest: wjXQFdwHSo6eB0Z2BhHQVquWoiw=
+
+Name: assets/main.jsc
+SHA1-Digest: Gek9LQeaHWYau9ci/KxKH4N/4k0=
+
+Name: assets/res/teach5.png
+SHA1-Digest: SmPej3OgFWXdjGYGDiKrOJszvzA=
+
+Name: assets/res/fly_blue2.png
+SHA1-Digest: 21yWYpzGdjXXauHRrd1vNykdVs0=
+
+Name: res/drawable-xxhdpi-v4/icon.png
+SHA1-Digest: 0BjFCUXrj5gw/G19wkWY22zM4rk=
+
+Name: assets/res/column_purple.png
+SHA1-Digest: 9tQphsxq9n7Tg2XSRzjk3K7ND5Q=
+
+Name: assets/res/fly_red2.png
+SHA1-Digest: sAXYGBFJlqlqESp9wOBmrSx8Jos=
+
+Name: assets/script/jsb_chipmunk.jsc
+SHA1-Digest: AL5mUHXfSh5QpaYhsDErPIEX6xE=
+
+Name: assets/res/column_gray.png
+SHA1-Digest: +qzR9NnZ8Tgi5QxS5/VtAZhMUPA=
+

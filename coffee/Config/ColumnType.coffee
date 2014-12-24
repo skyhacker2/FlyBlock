@@ -5,30 +5,18 @@ ColumnType = [
 	}
 	{
 		id: 1
-		textureName: "res/column_brown.png"
-	}
-	{
-		id: 2
-		textureName: "res/column_gray.png"
-	}
-	{
-		id: 3
 		textureName: "res/column_green.png"
 	}
 	{
-		id: 4
-		textureName: "res/column_orange.png"
-	}
-	{
-		id: 5
+		id: 2
 		textureName: "res/column_purple.png"
 	}
 	{
-		id: 6
+		id: 3
 		textureName: "res/column_red.png"
 	}
 	{
-		id: 7
+		id: 4
 		textureName: "res/column_yellow.png"
 	}
 ]

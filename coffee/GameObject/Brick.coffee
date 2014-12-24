@@ -4,9 +4,25 @@ Brick = GameObject.extend
 
 	ctor: (type)->
 		@_super()
-		@initWithFile type.textureName
-
 		@type = type
+		if type.id isnt BrickType.length-1
+			@initWithFile type.textureName
+		else
+			@initMonster()
+
+
+	initMonster: ()->
+		frame = cc.spriteFrameCache.getSpriteFrame @type.textureName + "0001.png"
+		@setSpriteFrame frame
+		animFrames = []
+		for i in [1..12]
+			str = @type.textureName + (if i < 10 then "000" + i else "00" + i) + ".png"
+			f = cc.spriteFrameCache.getSpriteFrame str
+			animFrames.push f
+		animation = new cc.Animation animFrames, 1.0 / 12.0
+		animation.setLoops 10000
+		animation.setRestoreOriginalFrame true
+		@runAction cc.animate animation
 
 	destroy: ()->
 		@active = false

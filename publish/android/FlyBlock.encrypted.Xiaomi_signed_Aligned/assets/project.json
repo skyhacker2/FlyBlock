@@ -1,0 +1,35 @@
+{
+    "project_type": "javascript",
+
+    "debugMode" : 1,
+    "showFPS" : false,
+    "frameRate" : 60,
+    "id" : "gameCanvas",
+    "renderMode" : 0,
+    "engineDir":"frameworks/cocos2d-html5",
+
+    "modules" : ["cocos2d", "extensions", "external"],
+
+    "jsList" : [
+        "src/libs/extends.js",
+        "src/libs/Wtk.js",
+        "src/libs/ShareUI.js",
+        "src/Config/Config.js",
+        "src/Config/ColumnType.js",
+        "src/Config/BlockType.js",
+        "src/Config/BrickType.js",
+        "src/GameObject/GameObject.js",
+        "src/GameObject/Column.js",
+        "src/GameObject/Block.js",
+        "src/GameObject/Brick.js",
+        "src/Utils.js",
+        "src/BaseLayer.js",
+        "src/MyLoaderScene.js",
+        "src/ChipmunkLayer.js",
+        "src/Resources.js",
+        "src/GameScene.js",
+        "src/StartScene.js",
+        "src/TeachScene.js",
+        "src/ChipmunkTest.js"
+    ]
+}

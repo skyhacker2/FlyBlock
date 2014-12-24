@@ -11,6 +11,12 @@ GameLayer = BaseLayer.extend({
   ctor: function() {
     this._super();
     cc.log("" + this._className + " ctor");
+    cc.spriteFrameCache.addSpriteFrames("res/fly_blue.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/fly_green.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/fly_purple.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/fly_red.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/fly_yellow.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/brick.plist");
     this._bgIndex = 0;
     this._cloudLayers = [];
     this._columns = [];
@@ -163,7 +169,6 @@ GameLayer = BaseLayer.extend({
       return;
     }
     cc.audioEngine.playEffect("res/touch.mp3");
-    this.block.stopAllActions();
     this.block.state = BlockState.UP;
     time = 0.2;
     action = cc.sequence(cc.spawn(cc.rotateTo(time, -15), cc.moveTo(time, cc.pAdd(this.block.getPosition(), cc.p(0, 70)))), cc.callFunc((function(_this) {
@@ -270,11 +275,11 @@ GameLayer = BaseLayer.extend({
     if (this._bricks.length > G.BRICK_NUM) {
       return;
     }
-    num = getRandomInt(0, 9);
+    num = getRandomInt(0, BrickType.length);
     if (num < 2) {
       type = BrickType[getRandomInt(0, BrickType.length - 1)];
     } else {
-      type = BrickType[8];
+      type = BrickType[BrickType.length - 1];
     }
     brick = Brick.getOrCreate(type);
     pos = cc.p(this._winSize.width + 100, this._winSize.height * 0.7);
@@ -370,7 +375,7 @@ GameLayer = BaseLayer.extend({
         _results.push((function(_this) {
           return function(brick) {
             if (cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)) {
-              if (brick.type.id === 8) {
+              if (brick.type.id === BrickType.length - 1) {
                 _this._gameOver = true;
                 return _this.gameOver();
               } else {

@@ -6,8 +6,27 @@ Brick = GameObject.extend({
   _className: "Brick",
   ctor: function(type) {
     this._super();
-    this.initWithFile(type.textureName);
-    return this.type = type;
+    this.type = type;
+    if (type.id !== BrickType.length - 1) {
+      return this.initWithFile(type.textureName);
+    } else {
+      return this.initMonster();
+    }
+  },
+  initMonster: function() {
+    var animFrames, animation, f, frame, i, str, _i;
+    frame = cc.spriteFrameCache.getSpriteFrame(this.type.textureName + "0001.png");
+    this.setSpriteFrame(frame);
+    animFrames = [];
+    for (i = _i = 1; _i <= 12; i = ++_i) {
+      str = this.type.textureName + (i < 10 ? "000" + i : "00" + i) + ".png";
+      f = cc.spriteFrameCache.getSpriteFrame(str);
+      animFrames.push(f);
+    }
+    animation = new cc.Animation(animFrames, 1.0 / 12.0);
+    animation.setLoops(10000);
+    animation.setRestoreOriginalFrame(true);
+    return this.runAction(cc.animate(animation));
   },
   destroy: function() {
     this.active = false;

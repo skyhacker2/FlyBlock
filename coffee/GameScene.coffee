@@ -11,6 +11,13 @@ GameLayer = BaseLayer.extend
 	ctor: ()->
 		@_super()
 		cc.log "#{@_className} ctor"
+		#添加大图
+		cc.spriteFrameCache.addSpriteFrames "res/fly_blue.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/fly_green.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/fly_purple.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/fly_red.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/fly_yellow.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/brick.plist"
 		
 		@_bgIndex = 0
 		@_cloudLayers = []
@@ -28,6 +35,8 @@ GameLayer = BaseLayer.extend
 		@setBackground(@_bgRes[@_bgIndex])
 
 		@createUI()
+
+
 
 		#触摸事件
 		#destop
@@ -155,7 +164,7 @@ GameLayer = BaseLayer.extend
 			return
 		cc.audioEngine.playEffect "res/touch.mp3"
 
-		@block.stopAllActions()
+		# @block.stopAllActions()
 		@block.state = BlockState.UP
 		time = 0.2
 		action = cc.sequence cc.spawn(cc.rotateTo(time, -15),
@@ -246,11 +255,11 @@ GameLayer = BaseLayer.extend
 	_addBrick: (dt)->
 		if @_bricks.length > G.BRICK_NUM
 			return
-		num = getRandomInt(0, 9)
+		num = getRandomInt(0, BrickType.length)
 		if num < 2
 			type = BrickType[getRandomInt(0, BrickType.length-1)]
 		else
-			type = BrickType[8]
+			type = BrickType[BrickType.length-1]
 		brick = Brick.getOrCreate(type)
 		pos = cc.p(@_winSize.width + 100, @_winSize.height * 0.7)
 		randomX = getRandomInt(200, 700)
@@ -323,7 +332,7 @@ GameLayer = BaseLayer.extend
 			for brick in @_bricks
 				do(brick)=>
 					if cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)
-						if brick.type.id is 8
+						if brick.type.id is BrickType.length-1
 							@_gameOver = true
 							@gameOver()
 						else
