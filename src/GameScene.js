@@ -28,6 +28,7 @@ GameLayer = BaseLayer.extend({
     this._blockQueue = [];
     this._bricks = [];
     this._floatBlocks = [];
+    this.action = null;
     this._bgIndex = getRandomInt(0, this._bgNum);
     this.setBackground(this._bgRes[this._bgIndex]);
     this.createUI();
@@ -164,21 +165,22 @@ GameLayer = BaseLayer.extend({
     return this.addChild(shareBtn, 5);
   },
   touch: function() {
-    var action, time;
+    var time;
     if (this._gameOver) {
       return;
     }
     cc.audioEngine.playEffect("res/touch.mp3");
+    this.block.stopAction(this.action);
     this.block.state = BlockState.UP;
     time = 0.2;
-    action = cc.sequence(cc.spawn(cc.rotateTo(time, -15), cc.moveTo(time, cc.pAdd(this.block.getPosition(), cc.p(0, 70)))), cc.callFunc((function(_this) {
+    this.action = cc.sequence(cc.spawn(cc.rotateTo(time, -15), cc.moveTo(time, cc.pAdd(this.block.getPosition(), cc.p(0, 70)))), cc.callFunc((function(_this) {
       return function() {
         _this.block.state = BlockState.DOWN;
         _this.block.runAction(cc.rotateTo(time, 15));
         return _this.time = 0;
       };
     })(this)));
-    return this.block.runAction(action);
+    return this.block.runAction(this.action);
   },
   onEnter: function() {
     this._super();

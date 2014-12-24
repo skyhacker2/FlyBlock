@@ -30,6 +30,7 @@ GameLayer = BaseLayer.extend
 		@_blockQueue = []
 		@_bricks = [] # 砖块
 		@_floatBlocks = [] # 漂浮方块
+		@action = null
 
 		@_bgIndex = getRandomInt(0, @_bgNum)
 		@setBackground(@_bgRes[@_bgIndex])
@@ -164,10 +165,10 @@ GameLayer = BaseLayer.extend
 			return
 		cc.audioEngine.playEffect "res/touch.mp3"
 
-		# @block.stopAllActions()
+		@block.stopAction @action
 		@block.state = BlockState.UP
 		time = 0.2
-		action = cc.sequence cc.spawn(cc.rotateTo(time, -15),
+		@action = cc.sequence cc.spawn(cc.rotateTo(time, -15),
 			cc.moveTo(time, cc.pAdd(@block.getPosition(), cc.p(0, 70)))
 			), cc.callFunc ()=>
 				#cc.log 'cc.callFunc'
@@ -175,7 +176,7 @@ GameLayer = BaseLayer.extend
 				@block.runAction(cc.rotateTo(time, 15))
 				@time = 0
 
-		@block.runAction action
+		@block.runAction @action
 
 	onEnter: ()->
 		@_super()

@@ -37,12 +37,16 @@ Block = GameObject.extend
 		@state = state
 
 	play: ()->
-		@runAction cc.animate @animation
+		@stopActionByTag 1
+		animate = cc.animate @animation
+		animate.setTag 1
+		@runAction animate
 
 	changeType: (type)->
 		@type = type
 		frame = cc.spriteFrameCache.getSpriteFrame "#{type.textureName}0001.png"
 		@setSpriteFrame frame
+		@initAnimation()
 		@play()
 
 Block.getOrCreate = (type)->

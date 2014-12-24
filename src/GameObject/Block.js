@@ -42,13 +42,18 @@ Block = GameObject.extend({
     return this.state = state;
   },
   play: function() {
-    return this.runAction(cc.animate(this.animation));
+    var animate;
+    this.stopActionByTag(1);
+    animate = cc.animate(this.animation);
+    animate.setTag(1);
+    return this.runAction(animate);
   },
   changeType: function(type) {
     var frame;
     this.type = type;
     frame = cc.spriteFrameCache.getSpriteFrame("" + type.textureName + "0001.png");
     this.setSpriteFrame(frame);
+    this.initAnimation();
     return this.play();
   }
 });
