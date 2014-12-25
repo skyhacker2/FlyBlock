@@ -85,7 +85,7 @@ GameLayer = BaseLayer.extend
 			cloudLayer.setContentSize cloud.getContentSize()
 			@_cloudLayers.push cloudLayer
 			@addChild cloudLayer
-			w += cloud.getContentSize().width
+			w += cloud.getContentSize().width-15
 
 		@_addColumn()
 
@@ -219,14 +219,17 @@ GameLayer = BaseLayer.extend
 				pos = layer.getPosition()
 				layer.setPosition cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0)
 				if layer.getPosition().x + layer.getContentSize().width < 0
-					layer.setPosition cc.p(layer.getContentSize().width, 0)
+					layer.setPosition cc.p(layer.getContentSize().width-15, 0)
 		return 0
 
 	_moveColumn: (dt)->
+		x = @_columns[0].getPosition().x
+		i = 0
 		for c in @_columns
-			do(c)->
+			do(c)=>
 				pos = c.getPosition()
-				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y)
+				c.setPosition cc.p(x - G.MOVE_INTERVAL * dt, pos.y)
+				x = x + @_columns[0].getContentSize().width
 
 		if @_columns[0].getPosition().x + @_columns[0].getContentSize().width/2 < 0
 			@_columns[0].destroy()
@@ -242,7 +245,7 @@ GameLayer = BaseLayer.extend
 			else
 				column = Column.getOrCreate ColumnType[type]
 				size = column.getContentSize()
-				height = getRandomInt -size.height * 0.3, size.height/2
+				height = getRandomInt(0, size.height/2)
 				x = if @_columnNum > 0 then @_columns[@_columnNum-1].getPosition().x else -size.width # 最后的一个column的x坐标或者0
 
 				column.setPosition cc.p(x + size.width, height)
@@ -305,7 +308,7 @@ GameLayer = BaseLayer.extend
 			@block.setPosition cc.pSub @block.getPosition(), cc.p(0, v * dt)
 			return
 
-	_checkIsCollide: ()->
+	_checkIsCollide: (dt)->
 		column = null
 		pos = @block.getPosition()
 		blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
@@ -325,6 +328,13 @@ GameLayer = BaseLayer.extend
 						@_label.setString(@_score)
 						@block.destroy()
 						@_nextBlock()
+						columnPos = column.getPosition()
+						column.runAction cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02, columnPos.y - 20)),
+							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*2, columnPos.y + 15)),
+							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*3, columnPos.y - 10)),
+							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*4, columnPos.y + 5)),
+							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*5, columnPos.y - 3)),
+							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*6, columnPos.y)))
 					return
 		# 砖块的碰撞
 		if not @block.invincible

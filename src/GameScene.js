@@ -88,7 +88,7 @@ GameLayer = BaseLayer.extend({
       cloudLayer.setContentSize(cloud.getContentSize());
       this._cloudLayers.push(cloudLayer);
       this.addChild(cloudLayer);
-      w += cloud.getContentSize().width;
+      w += cloud.getContentSize().width - 15;
     }
     this._addColumn();
     this._label = new cc.LabelTTF("0", "Ariel", 100);
@@ -224,7 +224,7 @@ GameLayer = BaseLayer.extend({
       pos = layer.getPosition();
       layer.setPosition(cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0));
       if (layer.getPosition().x + layer.getContentSize().width < 0) {
-        return layer.setPosition(cc.p(layer.getContentSize().width, 0));
+        return layer.setPosition(cc.p(layer.getContentSize().width - 15, 0));
       }
     };
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -234,13 +234,18 @@ GameLayer = BaseLayer.extend({
     return 0;
   },
   _moveColumn: function(dt) {
-    var c, _fn, _i, _len, _ref;
+    var c, i, x, _fn, _i, _len, _ref;
+    x = this._columns[0].getPosition().x;
+    i = 0;
     _ref = this._columns;
-    _fn = function(c) {
-      var pos;
-      pos = c.getPosition();
-      return c.setPosition(cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y));
-    };
+    _fn = (function(_this) {
+      return function(c) {
+        var pos;
+        pos = c.getPosition();
+        c.setPosition(cc.p(x - G.MOVE_INTERVAL * dt, pos.y));
+        return x = x + _this._columns[0].getContentSize().width;
+      };
+    })(this);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       c = _ref[_i];
       _fn(c);
@@ -260,7 +265,7 @@ GameLayer = BaseLayer.extend({
       } else {
         column = Column.getOrCreate(ColumnType[type]);
         size = column.getContentSize();
-        height = getRandomInt(-size.height * 0.3, size.height / 2);
+        height = getRandomInt(0, size.height / 2);
         x = this._columnNum > 0 ? this._columns[this._columnNum - 1].getPosition().x : -size.width;
         column.setPosition(cc.p(x + size.width, height));
         this._columns.push(column);
@@ -344,8 +349,8 @@ GameLayer = BaseLayer.extend({
       this.block.setPosition(cc.pSub(this.block.getPosition(), cc.p(0, v * dt)));
     }
   },
-  _checkIsCollide: function() {
-    var blockRect, brick, column, dis, i, pos, rect, _i, _j, _len, _ref, _ref1, _results;
+  _checkIsCollide: function(dt) {
+    var blockRect, brick, column, columnPos, dis, i, pos, rect, _i, _j, _len, _ref, _ref1, _results;
     column = null;
     pos = this.block.getPosition();
     blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
@@ -364,6 +369,8 @@ GameLayer = BaseLayer.extend({
           this._label.setString(this._score);
           this.block.destroy();
           this._nextBlock();
+          columnPos = column.getPosition();
+          column.runAction(cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02, columnPos.y - 20)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 2, columnPos.y + 15)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 3, columnPos.y - 10)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 4, columnPos.y + 5)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 5, columnPos.y - 3)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 6, columnPos.y))));
         }
         return;
       }
