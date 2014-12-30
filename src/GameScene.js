@@ -17,6 +17,7 @@ GameLayer = BaseLayer.extend({
     cc.spriteFrameCache.addSpriteFrames("res/fly_red.plist");
     cc.spriteFrameCache.addSpriteFrames("res/fly_yellow.plist");
     cc.spriteFrameCache.addSpriteFrames("res/brick.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/column_coll_effect.plist");
     this._bgIndex = 0;
     this._cloudLayers = [];
     this._columns = [];
@@ -90,6 +91,8 @@ GameLayer = BaseLayer.extend({
       this.addChild(cloudLayer);
       w += cloud.getContentSize().width - 15;
     }
+    this.columnLayer = new cc.Layer();
+    this.addChild(this.columnLayer, 3);
     this._addColumn();
     this._label = new cc.LabelTTF("0", "Ariel", 100);
     this._label.attr({
@@ -234,26 +237,15 @@ GameLayer = BaseLayer.extend({
     return 0;
   },
   _moveColumn: function(dt) {
-    var c, i, x, _fn, _i, _len, _ref;
-    x = this._columns[0].getPosition().x;
-    i = 0;
-    _ref = this._columns;
-    _fn = (function(_this) {
-      return function(c) {
-        var pos;
-        pos = c.getPosition();
-        c.setPosition(cc.p(x - G.MOVE_INTERVAL * dt, pos.y));
-        return x = x + _this._columns[0].getContentSize().width;
-      };
-    })(this);
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      c = _ref[_i];
-      _fn(c);
-    }
-    if (this._columns[0].getPosition().x + this._columns[0].getContentSize().width / 2 < 0) {
-      this._columns[0].destroy();
-      this._columnNum--;
-      return this._columns.shift();
+    var pos;
+    this.columnLayer.x = this.columnLayer.x - G.MOVE_INTERVAL * dt;
+    if (this._columns.length > 0) {
+      pos = this.columnLayer.convertToWorldSpace(this._columns[0].getPosition());
+      if (pos.x + this._columns[0].width / 2 < 0) {
+        this._columns[0].destroy();
+        this._columnNum--;
+        return this._columns.shift();
+      }
     }
   },
   _addColumn: function(dt) {
@@ -270,7 +262,7 @@ GameLayer = BaseLayer.extend({
         column.setPosition(cc.p(x + size.width, height));
         this._columns.push(column);
         if (!column.getParent()) {
-          this.addChild(column, 3);
+          this.columnLayer.addChild(column, 3);
         }
         this._columnNum++;
         return this._addColumn();
@@ -350,13 +342,13 @@ GameLayer = BaseLayer.extend({
     }
   },
   _checkIsCollide: function(dt) {
-    var blockRect, brick, column, columnPos, dis, i, pos, rect, _i, _j, _len, _ref, _ref1, _results;
+    var blockRect, brick, column, columnPos, dis, i, pos, rect, x, y, _i, _j, _len, _ref, _ref1, _results;
     column = null;
     pos = this.block.getPosition();
     blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
     for (i = _i = 0, _ref = this._columns.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
       column = this._columns[i];
-      rect = column.getBoundingBox();
+      rect = column.getBoundingBoxToWorld();
       if (cc.rectContainsPoint(rect, this.block.getPosition()) || cc.rectIntersectsRect(rect, blockRect)) {
         cc.log("碰撞啦");
         if (this.block.type.id !== column.type.id) {
@@ -365,12 +357,15 @@ GameLayer = BaseLayer.extend({
         } else {
           cc.log("Bingo");
           cc.audioEngine.playEffect('res/score.mp3');
+          x = column.x;
+          y = column.y + column.height * 0.2;
+          Effect.columnCollEffect(this.columnLayer, cc.p(x, y));
           this._score++;
           this._label.setString(this._score);
           this.block.destroy();
           this._nextBlock();
           columnPos = column.getPosition();
-          column.runAction(cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02, columnPos.y - 20)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 2, columnPos.y + 15)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 3, columnPos.y - 10)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 4, columnPos.y + 5)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 5, columnPos.y - 3)), cc.moveTo(0.02, cc.p(columnPos.x - G.MOVE_INTERVAL * 0.02 * 6, columnPos.y))));
+          column.runAction(cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 20)), cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 15)), cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 10)), cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 5)), cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 3)), cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y))));
         }
         return;
       }

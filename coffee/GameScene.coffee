@@ -18,6 +18,7 @@ GameLayer = BaseLayer.extend
 		cc.spriteFrameCache.addSpriteFrames "res/fly_red.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/fly_yellow.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/brick.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/column_coll_effect.plist"
 		
 		@_bgIndex = 0
 		@_cloudLayers = []
@@ -32,12 +33,11 @@ GameLayer = BaseLayer.extend
 		@_floatBlocks = [] # 漂浮方块
 		@action = null
 
+
 		@_bgIndex = getRandomInt(0, @_bgNum)
 		@setBackground(@_bgRes[@_bgIndex])
 
 		@createUI()
-
-
 
 		#触摸事件
 		#destop
@@ -87,6 +87,8 @@ GameLayer = BaseLayer.extend
 			@addChild cloudLayer
 			w += cloud.getContentSize().width-15
 
+		@columnLayer = new cc.Layer()
+		@addChild @columnLayer, 3
 		@_addColumn()
 
 		# 分数
@@ -223,18 +225,25 @@ GameLayer = BaseLayer.extend
 		return 0
 
 	_moveColumn: (dt)->
-		x = @_columns[0].getPosition().x
-		i = 0
-		for c in @_columns
-			do(c)=>
-				pos = c.getPosition()
-				c.setPosition cc.p(x - G.MOVE_INTERVAL * dt, pos.y)
-				x = x + @_columns[0].getContentSize().width
+		# x = @_columns[0].getPosition().x
+		# i = 0
+		# for c in @_columns
+		# 	do(c)=>
+		# 		pos = c.getPosition()
+		# 		c.setPosition cc.p(x - G.MOVE_INTERVAL * dt, pos.y)
+		# 		x = x + @_columns[0].getContentSize().width
 
-		if @_columns[0].getPosition().x + @_columns[0].getContentSize().width/2 < 0
-			@_columns[0].destroy()
-			@_columnNum--
-			@_columns.shift()
+		# if @_columns[0].getPosition().x + @_columns[0].getContentSize().width/2 < 0
+		# 	@_columns[0].destroy()
+		# 	@_columnNum--
+		# 	@_columns.shift()
+		@columnLayer.x = @columnLayer.x - G.MOVE_INTERVAL * dt
+		if @_columns.length > 0
+			pos = @columnLayer.convertToWorldSpace @_columns[0].getPosition()
+			if pos.x + @_columns[0].width / 2 < 0
+				@_columns[0].destroy()
+				@_columnNum--
+				@_columns.shift()
 
 	_addColumn: (dt)->
 		if @_columnNum < G.ColumnNum
@@ -251,7 +260,7 @@ GameLayer = BaseLayer.extend
 				column.setPosition cc.p(x + size.width, height)
 				@_columns.push column
 				if not column.getParent()
-					@addChild column, 3
+					@columnLayer.addChild column, 3
 				@_columnNum++
 				@_addColumn()
 
@@ -314,7 +323,7 @@ GameLayer = BaseLayer.extend
 		blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
 		for i in [0...@_columns.length]
 			column = @_columns[i]
-			rect = column.getBoundingBox()
+			rect = column.getBoundingBoxToWorld()
 			if cc.rectContainsPoint(rect, @block.getPosition()) or
 				cc.rectIntersectsRect(rect, blockRect)
 					cc.log "碰撞啦"
@@ -324,17 +333,20 @@ GameLayer = BaseLayer.extend
 					else
 						cc.log "Bingo"
 						cc.audioEngine.playEffect 'res/score.mp3'
+						x = column.x
+						y = column.y + column.height * 0.2
+						Effect.columnCollEffect @columnLayer, cc.p(x, y)
 						@_score++
 						@_label.setString(@_score)
 						@block.destroy()
 						@_nextBlock()
 						columnPos = column.getPosition()
-						column.runAction cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02, columnPos.y - 20)),
-							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*2, columnPos.y + 15)),
-							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*3, columnPos.y - 10)),
-							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*4, columnPos.y + 5)),
-							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*5, columnPos.y - 3)),
-							cc.moveTo(0.02, cc.p(columnPos.x-G.MOVE_INTERVAL*0.02*6, columnPos.y)))
+						column.runAction cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 20)),
+							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 15)),
+							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 10)),
+							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 5)),
+							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 3)),
+							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y)))
 					return
 		# 砖块的碰撞
 		if not @block.invincible

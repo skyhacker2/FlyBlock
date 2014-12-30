@@ -30,6 +30,7 @@
         "src/GameScene.js",
         "src/StartScene.js",
         "src/TeachScene.js",
-        "src/ChipmunkTest.js"
+        "src/ChipmunkTest.js",
+        "src/Effect.js"
     ]
 }

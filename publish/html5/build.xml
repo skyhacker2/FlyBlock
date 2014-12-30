@@ -285,6 +285,7 @@
                 <file name="src/StartScene.js"/>
                 <file name="src/TeachScene.js"/>
                 <file name="src/ChipmunkTest.js"/>
+                <file name="src/Effect.js"/>
                 <file name="main.js"/>
 
             </sources>
