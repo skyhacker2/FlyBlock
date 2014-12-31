@@ -73,24 +73,25 @@ GameLayer = BaseLayer.extend({
     }
   },
   createUI: function() {
-    var againBtn, bestScore, block, blockType, board, cloud, cloudLayer, i, shareBtn, w, _i, _j;
-    w = 0;
-    for (i = _i = 0; _i <= 1; i = ++_i) {
-      cloudLayer = new cc.Layer();
-      cloudLayer.setPosition(w, 0);
-      cloud = new cc.Sprite(this._cloudRes[this._bgIndex]);
-      cloud.attr({
-        anchorX: 0,
-        anchorY: 0,
-        x: 0,
-        y: 0
-      });
-      cloudLayer.addChild(cloud);
-      cloudLayer.setContentSize(cloud.getContentSize());
-      this._cloudLayers.push(cloudLayer);
-      this.addChild(cloudLayer);
-      w += cloud.getContentSize().width - 15;
-    }
+    var againBtn, bestScore, block, blockType, board, i, shareBtn, _i;
+    this.cloudLayer = new cc.Layer();
+    this.cloud1 = new cc.Sprite(this._cloudRes[this._bgIndex]);
+    this.cloud1.attr({
+      anchorX: 0,
+      anchorY: 0,
+      x: 0,
+      y: 0
+    });
+    this.cloudLayer.addChild(this.cloud1);
+    this.cloud2 = new cc.Sprite(this._cloudRes[this._bgIndex]);
+    this.cloud2.attr({
+      anchorX: 0,
+      anchorY: 0,
+      x: this.cloud1.x + this.cloud1.width,
+      y: 0
+    });
+    this.cloudLayer.addChild(this.cloud2);
+    this.addChild(this.cloudLayer);
     this.columnLayer = new cc.Layer();
     this.addChild(this.columnLayer, 3);
     this._addColumn();
@@ -109,7 +110,7 @@ GameLayer = BaseLayer.extend({
       y: this._winSize.height - 40
     });
     this.addChild(this.bestLabel);
-    for (i = _j = 0; _j < 5; i = ++_j) {
+    for (i = _i = 0; _i < 5; i = ++_i) {
       this._blockQueue.push(BlockType[getRandomInt(0, BlockType.length)]);
     }
     blockType = BlockType[getRandomInt(0, BlockType.length)];
@@ -208,7 +209,7 @@ GameLayer = BaseLayer.extend({
   update: function(dt) {
     this._gameTime += dt;
     if (!this._gameOver) {
-      this._updateCloudLayer(dt);
+      this._moveCloudLayer(dt);
       this._moveColumn(dt);
       this._addColumn(dt);
       this._moveBrick(dt);
@@ -219,20 +220,16 @@ GameLayer = BaseLayer.extend({
       return this.unscheduleUpdate();
     }
   },
-  _updateCloudLayer: function(dt) {
-    var layer, _fn, _i, _len, _ref;
-    _ref = this._cloudLayers;
-    _fn = function(layer) {
-      var pos;
-      pos = layer.getPosition();
-      layer.setPosition(cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0));
-      if (layer.getPosition().x + layer.getContentSize().width < 0) {
-        return layer.setPosition(cc.p(layer.getContentSize().width - 15, 0));
-      }
-    };
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      layer = _ref[_i];
-      _fn(layer);
+  _moveCloudLayer: function(dt) {
+    this.cloud1.x -= G.MOVE_INTERVAL * dt;
+    this.cloud2.x -= G.MOVE_INTERVAL * dt;
+    if (this.cloud1.x + this.cloud1.width < 0) {
+      this.cloud1.x = this.cloud1.width;
+      this.cloud2.x = 0;
+    }
+    if (this.cloud2.x + this.cloud2.width < 0) {
+      this.cloud2.x = this.cloud2.width;
+      this.cloud1.x = 0;
     }
     return 0;
   },

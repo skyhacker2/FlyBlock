@@ -70,22 +70,41 @@ GameLayer = BaseLayer.extend
 
 	createUI: ()->
 		#云层
-		w = 0
-		for i in [0..1]
-			cloudLayer = new cc.Layer()
-			cloudLayer.setPosition w, 0
-			cloud = new cc.Sprite @_cloudRes[@_bgIndex]
-			cloud.attr
-				anchorX: 0
-				anchorY: 0
-				x: 0
-				y: 0
+		@cloudLayer = new cc.Layer()
+		@cloud1 = new cc.Sprite @_cloudRes[@_bgIndex]
+		@cloud1.attr
+			anchorX: 0
+			anchorY: 0
+			x: 0
+			y: 0
+		@cloudLayer.addChild @cloud1
 
-			cloudLayer.addChild cloud
-			cloudLayer.setContentSize cloud.getContentSize()
-			@_cloudLayers.push cloudLayer
-			@addChild cloudLayer
-			w += cloud.getContentSize().width-15
+		@cloud2 = new cc.Sprite @_cloudRes[@_bgIndex]
+		@cloud2.attr
+			anchorX: 0
+			anchorY: 0
+			x: @cloud1.x + @cloud1.width
+			y: 0
+		@cloudLayer.addChild @cloud2
+
+		@addChild @cloudLayer
+
+		# w = 0
+		# for i in [0..1]
+		# 	cloudLayer = new cc.Layer()
+		# 	cloudLayer.setPosition w, 0
+		# 	cloud = new cc.Sprite @_cloudRes[@_bgIndex]
+		# 	cloud.attr
+		# 		anchorX: 0
+		# 		anchorY: 0
+		# 		x: 0
+		# 		y: 0
+
+		# 	cloudLayer.addChild cloud
+		# 	cloudLayer.setContentSize cloud.getContentSize()
+		# 	@_cloudLayers.push cloudLayer
+		# 	@addChild cloudLayer
+		# 	w += cloudLayer.getContentSize().width
 
 		@columnLayer = new cc.Layer()
 		@addChild @columnLayer, 3
@@ -205,7 +224,7 @@ GameLayer = BaseLayer.extend
 		#  	cc.audioEngine.playEffect "res/touch.mp3"
 		@_gameTime += dt
 		if not @_gameOver
-			@_updateCloudLayer(dt)
+			@_moveCloudLayer(dt)
 			@_moveColumn(dt)
 			@_addColumn(dt)
 			@_moveBrick(dt)
@@ -215,28 +234,19 @@ GameLayer = BaseLayer.extend
 		else
 			@unscheduleUpdate()
 
-	_updateCloudLayer: (dt)->
-		for layer in @_cloudLayers
-			do (layer)->
-				pos = layer.getPosition()
-				layer.setPosition cc.p(pos.x - G.CLOUD_MOVE_INTERVAL * dt, 0)
-				if layer.getPosition().x + layer.getContentSize().width < 0
-					layer.setPosition cc.p(layer.getContentSize().width-15, 0)
+	_moveCloudLayer: (dt)->
+		@cloud1.x -= G.MOVE_INTERVAL * dt
+		@cloud2.x -= G.MOVE_INTERVAL * dt
+		if @cloud1.x + @cloud1.width < 0
+			@cloud1.x = @cloud1.width
+			@cloud2.x = 0
+		if @cloud2.x + @cloud2.width < 0
+			@cloud2.x = @cloud2.width
+			@cloud1.x = 0
+		
 		return 0
 
 	_moveColumn: (dt)->
-		# x = @_columns[0].getPosition().x
-		# i = 0
-		# for c in @_columns
-		# 	do(c)=>
-		# 		pos = c.getPosition()
-		# 		c.setPosition cc.p(x - G.MOVE_INTERVAL * dt, pos.y)
-		# 		x = x + @_columns[0].getContentSize().width
-
-		# if @_columns[0].getPosition().x + @_columns[0].getContentSize().width/2 < 0
-		# 	@_columns[0].destroy()
-		# 	@_columnNum--
-		# 	@_columns.shift()
 		@columnLayer.x = @columnLayer.x - G.MOVE_INTERVAL * dt
 		if @_columns.length > 0
 			pos = @columnLayer.convertToWorldSpace @_columns[0].getPosition()
