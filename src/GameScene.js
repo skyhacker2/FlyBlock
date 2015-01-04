@@ -18,6 +18,7 @@ GameLayer = BaseLayer.extend({
     cc.spriteFrameCache.addSpriteFrames("res/fly_yellow.plist");
     cc.spriteFrameCache.addSpriteFrames("res/brick.plist");
     cc.spriteFrameCache.addSpriteFrames("res/column_coll_effect.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/bianse.plist");
     this._bgIndex = 0;
     this._cloudLayers = [];
     this._columns = [];
@@ -271,8 +272,9 @@ GameLayer = BaseLayer.extend({
     if (this._bricks.length > G.BRICK_NUM) {
       return;
     }
-    num = getRandomInt(0, BrickType.length);
-    if (num < 2) {
+    num = getRandomInt(0, 10);
+    cc.log(num);
+    if (num < 3) {
       type = BrickType[getRandomInt(0, BrickType.length - 1)];
     } else {
       type = BrickType[BrickType.length - 1];
@@ -355,7 +357,7 @@ GameLayer = BaseLayer.extend({
           cc.log("Bingo");
           cc.audioEngine.playEffect('res/score.mp3');
           x = column.x;
-          y = column.y + column.height * 0.2;
+          y = column.y + 20;
           Effect.columnCollEffect(this.columnLayer, cc.p(x, y));
           this._score++;
           this._label.setString(this._score);
@@ -375,12 +377,14 @@ GameLayer = BaseLayer.extend({
         brick = _ref1[_j];
         _results.push((function(_this) {
           return function(brick) {
+            var changeType;
             if (cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)) {
               if (brick.type.id === BrickType.length - 1) {
                 _this._gameOver = true;
                 return _this.gameOver();
               } else {
-                _this.block.changeType(BlockType[brick.type.id]);
+                changeType = getRandomInt(0, BlockType.length);
+                _this.block.changeType(BlockType[changeType]);
                 _this.block.invincible = true;
                 _this._invincibleTime = 0;
                 return brick.destroy();

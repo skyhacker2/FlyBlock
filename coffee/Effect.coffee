@@ -9,7 +9,7 @@ Effect.columnCollEffect = (target, pos)->
             str = "texiao00" +  (if i < 10 then "0#{i}" else i) + ".png"
             frame = cc.spriteFrameCache.getSpriteFrame str
             aniFrames.push frame
-        animation = new cc.Animation aniFrames, 1.0 / 12.0
+        animation = new cc.Animation aniFrames, 1.0 / 24.0
         cc.animationCache.addAnimation "ColumnCollEffect"
     animate = new cc.Animate animation
     target.addChild effect

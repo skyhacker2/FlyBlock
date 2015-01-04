@@ -5,13 +5,9 @@ Brick = GameObject.extend
 	ctor: (type)->
 		@_super()
 		@type = type
-		if type.id isnt BrickType.length-1
-			@initWithFile type.textureName
-		else
-			@initMonster()
+		@init()
 
-
-	initMonster: ()->
+	init: ()->
 		frame = cc.spriteFrameCache.getSpriteFrame @type.textureName + "0001.png"
 		@setSpriteFrame frame
 		animFrames = []

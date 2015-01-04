@@ -7,13 +7,9 @@ Brick = GameObject.extend({
   ctor: function(type) {
     this._super();
     this.type = type;
-    if (type.id !== BrickType.length - 1) {
-      return this.initWithFile(type.textureName);
-    } else {
-      return this.initMonster();
-    }
+    return this.init();
   },
-  initMonster: function() {
+  init: function() {
     var animFrames, animation, f, frame, i, str, _i;
     frame = cc.spriteFrameCache.getSpriteFrame(this.type.textureName + "0001.png");
     this.setSpriteFrame(frame);

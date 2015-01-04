@@ -61,6 +61,8 @@ res =
 	brick_plist: "res/brick.plist"
 	column_coll_effect: "res/column_coll_effect.png"
 	column_coll_effect_plist: "res/column_coll_effect.plist"
+	bianse_plist: "res/bianse.plist"
+	bianse: "res/bianse.png"
 
 
 g_resources = []
@@ -127,5 +129,7 @@ g_gameScene = [
 	res.fly_yellow_plist,
 	res.brick_plist,
 	res.column_coll_effect,
-	res.column_coll_effect_plist
+	res.column_coll_effect_plist,
+	res.bianse,
+	res.bianse_plist
 ]

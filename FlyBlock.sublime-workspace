@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"cloud",
+				"cloud2"
+			],
+			[
+				"M",
+				"MOVE_INTERVAL"
+			],
+			[
+				"anch",
+				"anchorY"
+			],
+			[
+				"anc",
+				"anchorX"
+			],
+			[
+				"_clou",
+				"_cloudRes"
+			],
+			[
+				"_col",
+				"_columnNum"
+			],
+			[
 				"colu",
 				"columnLayer"
 			],
@@ -216,10 +240,6 @@
 				"ColumnCache"
 			],
 			[
-				"_col",
-				"_columns"
-			],
-			[
 				"fl",
 				"fly_orange"
 			],
@@ -258,14 +278,6 @@
 			[
 				"lee",
 				"level_bg2"
-			],
-			[
-				"cloud",
-				"cloudLayer"
-			],
-			[
-				"_clou",
-				"_cloudLayers"
 			],
 			[
 				"cloudL",
@@ -379,6 +391,25 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "coffee/GameScene.coffee",
+			"settings":
+			{
+				"buffer_size": 12311,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "frameworks/js-bindings\nframeworks/runtime-src/proj.android/obj\nframeworks/runtime-src/proj.android/bin\nframeworks/runtime-src/proj.android/assets\nnode_modules/\ntools/\nruntime/\n\n\n.DS_Store",
+			"file": ".gitignore",
+			"file_size": 186,
+			"file_write_time": 130630468490000000,
+			"settings":
+			{
+				"buffer_size": 187,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/User/gulp.sublime-build",
 	"command_palette":
@@ -412,7 +443,8 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock"
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/coffee"
 	],
 	"file_history":
 	[
@@ -554,8 +586,68 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "coffee/GameScene.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6009,
+								6009
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3325.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 187,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								187
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

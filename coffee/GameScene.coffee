@@ -19,6 +19,7 @@ GameLayer = BaseLayer.extend
 		cc.spriteFrameCache.addSpriteFrames "res/fly_yellow.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/brick.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/column_coll_effect.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/bianse.plist"
 		
 		@_bgIndex = 0
 		@_cloudLayers = []
@@ -278,8 +279,9 @@ GameLayer = BaseLayer.extend
 	_addBrick: (dt)->
 		if @_bricks.length > G.BRICK_NUM
 			return
-		num = getRandomInt(0, BrickType.length)
-		if num < 2
+		num = getRandomInt(0, 10)
+		cc.log num
+		if num < 3
 			type = BrickType[getRandomInt(0, BrickType.length-1)]
 		else
 			type = BrickType[BrickType.length-1]
@@ -344,7 +346,7 @@ GameLayer = BaseLayer.extend
 						cc.log "Bingo"
 						cc.audioEngine.playEffect 'res/score.mp3'
 						x = column.x
-						y = column.y + column.height * 0.2
+						y = column.y + 20
 						Effect.columnCollEffect @columnLayer, cc.p(x, y)
 						@_score++
 						@_label.setString(@_score)
@@ -369,7 +371,8 @@ GameLayer = BaseLayer.extend
 							@_gameOver = true
 							@gameOver()
 						else
-							@block.changeType(BlockType[brick.type.id])
+							changeType = getRandomInt(0, BlockType.length)
+							@block.changeType(BlockType[changeType])
 							@block.invincible = true
 							@_invincibleTime = 0
 							brick.destroy()

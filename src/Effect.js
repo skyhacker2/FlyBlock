@@ -14,7 +14,7 @@ Effect.columnCollEffect = function(target, pos) {
       frame = cc.spriteFrameCache.getSpriteFrame(str);
       aniFrames.push(frame);
     }
-    animation = new cc.Animation(aniFrames, 1.0 / 12.0);
+    animation = new cc.Animation(aniFrames, 1.0 / 24.0);
     cc.animationCache.addAnimation("ColumnCollEffect");
   }
   animate = new cc.Animate(animation);
