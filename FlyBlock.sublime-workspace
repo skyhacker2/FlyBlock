@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"Block",
+				"BlockType"
+			],
+			[
+				"bian",
+				"bianse_plist"
+			],
+			[
 				"cloud",
 				"cloud2"
 			],
@@ -220,10 +228,6 @@
 				"rotateTo"
 			],
 			[
-				"Block",
-				"BlockState"
-			],
-			[
 				"rot",
 				"rotateAction"
 			],
@@ -392,18 +396,58 @@
 	"buffers":
 	[
 		{
+			"contents": "GameLayer = BaseLayer.extend\n	_className: \"GameLayer\"\n	_bgNum: 3\n	_bgRes: [\"res/level_bg1.png\", \"res/level_bg2.png\", \"res/level_bg3.png\"]\n	_cloudRes: [\"res/level_cloud1.png\", \"res/level_cloud2.png\", \"res/level_cloud3.png\"]\n	a: 9.8 # 加速度\n	v0: 10 # 初速度\n	time: 0 # 时间\n	# v = v0 + at\n\n	ctor: ()->\n		@_super()\n		cc.log \"#{@_className} ctor\"\n		#添加大图\n		cc.spriteFrameCache.addSpriteFrames \"res/fly_blue.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/fly_green.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/fly_purple.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/fly_red.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/fly_yellow.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/brick.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/column_coll_effect.plist\"\n		cc.spriteFrameCache.addSpriteFrames \"res/bianse.plist\"\n		\n		@_bgIndex = 0\n		@_cloudLayers = []\n		@_columns = []\n		@_columnNum = 0\n		@_score = 0\n		@_gameTime = 0\n		@_invincibleTime = 0\n		@_gameOver = false\n		@_blockQueue = []\n		@_bricks = [] # 砖块\n		@_floatBlocks = [] # 漂浮方块\n		@action = null\n\n\n		@_bgIndex = getRandomInt(0, @_bgNum)\n		@setBackground(@_bgRes[@_bgIndex])\n\n		@createUI()\n\n		#触摸事件\n		#destop\n		if cc.sys.capabilities.hasOwnProperty('mouse')\n			cc.eventManager.addListener\n				event: cc.EventListener.MOUSE\n				onMouseDown: => \n					@touch()\n				, @\n		#device\n		if cc.sys.capabilities.hasOwnProperty 'touches'\n			cc.eventManager.addListener\n				event: cc.EventListener.TOUCH_ONE_BY_ONE\n				swallowTouches: true\n				onTouchBegan: ()=>\n					@touch()\n					return true\n				, @\n		if cc.sys.capabilities.hasOwnProperty \"keyboard\"\n			cc.eventManager.addListener\n				event: cc.EventListener.KEYBOARD\n				onKeyPressed: (key, evnet)->\n					cc.log 'key pressed ' + key\n				onKeyReleased: (key, event)->\n					cc.log \"key pressed #{key}\"\n					if key is 6\n						cc.LoaderScene.preload g_startScene, ()->\n							cc.director.runScene new StartScene()\n			, @\n\n	createUI: ()->\n		#云层\n		@cloudLayer = new cc.Layer()\n		@cloud1 = new cc.Sprite @_cloudRes[@_bgIndex]\n		@cloud1.attr\n			anchorX: 0\n			anchorY: 0\n			x: 0\n			y: 0\n		@cloudLayer.addChild @cloud1\n\n		@cloud2 = new cc.Sprite @_cloudRes[@_bgIndex]\n		@cloud2.attr\n			anchorX: 0\n			anchorY: 0\n			x: @cloud1.x + @cloud1.width\n			y: 0\n		@cloudLayer.addChild @cloud2\n\n		@addChild @cloudLayer\n\n		# w = 0\n		# for i in [0..1]\n		# 	cloudLayer = new cc.Layer()\n		# 	cloudLayer.setPosition w, 0\n		# 	cloud = new cc.Sprite @_cloudRes[@_bgIndex]\n		# 	cloud.attr\n		# 		anchorX: 0\n		# 		anchorY: 0\n		# 		x: 0\n		# 		y: 0\n\n		# 	cloudLayer.addChild cloud\n		# 	cloudLayer.setContentSize cloud.getContentSize()\n		# 	@_cloudLayers.push cloudLayer\n		# 	@addChild cloudLayer\n		# 	w += cloudLayer.getContentSize().width\n\n		@columnLayer = new cc.Layer()\n		@addChild @columnLayer, 3\n		@_addColumn()\n\n		# 分数\n		@_label = new cc.LabelTTF(\"0\", \"Ariel\", 100)\n		@_label.attr\n			x: @_winSize.width * 0.5\n			y: @_winSize.height * 0.8\n		@addChild @_label, 10\n\n		bestScore = cc.sys.localStorage.getItem(\"best\") or 0\n\n		@bestLabel = new cc.LabelTTF \"Best: #{bestScore}\", \"Ariel\", 40\n		@bestLabel.attr\n			anchorX: 0\n			anchory: 1\n			x: 10\n			y: @_winSize.height - 40\n		@addChild @bestLabel\n\n		# 方块\n		for i in [0...5]\n			@_blockQueue.push(BlockType[getRandomInt(0, BlockType.length)])\n\n		blockType = BlockType[getRandomInt(0, BlockType.length)]\n		block = @block = Block.getOrCreate blockType\n		block.attr\n			x: @_winSize.width * 0.5,\n			y: @_winSize.height * 0.7\n		@addChild block, 2\n\n		board = @scoreBoard = new cc.Sprite \"res/score_board.png\"\n		board.x = @_winSize.width/2\n		board.y = -board.getContentSize().height/2\n		@addChild board, 5\n\n		againBtn = @againBtn = new ccui.Button()\n		againBtn.loadTextureNormal 'res/again_btn.png'\n		againBtn.setTouchEnabled true\n		againBtn.setPressedActionEnabled true\n		againBtn.x = @_winSize.width * 0.3\n		againBtn.y = -againBtn.getContentSize().height/2\n		againBtn.addTouchEventListener (sender, type)=>\n			switch type\n				when ccui.Widget.TOUCH_ENDED\n					MyLoaderScene.preload g_gameScene, ()->\n					cc.director.runScene new GameScene()\n		, @\n		@addChild againBtn, 5\n\n		shareBtn = @shareBtn = new ccui.Button()\n		shareBtn.loadTextureNormal 'res/share_btn.png'\n		shareBtn.setTouchEnabled true\n		shareBtn.setPressedActionEnabled true\n		shareBtn.x = @_winSize.width * 0.7\n		shareBtn.y = -shareBtn.getContentSize().height/2\n		shareBtn.addTouchEventListener (sender, type)=>\n			switch type\n				when ccui.Widget.TOUCH_ENDED\n					if not cc.sys.isNative\n						@addChild new ShareUI(), 100\n						if @_score > 0\n							share(1, @_score)\n						else\n							share(0)\n					else\n						if cc.sys.isNative\n							jsb.reflection.callStaticMethod G.JAVA_CLASS,\n								\"hideSpotAd\", \"()V\"\n						@takeScreenshot()\n		, @\n		@addChild shareBtn, 5\n\n\n	touch: ()->\n		if @_gameOver\n			return\n		cc.audioEngine.playEffect \"res/touch.mp3\"\n\n		@block.stopAction @action\n		@block.state = BlockState.UP\n		time = 0.2\n		@action = cc.sequence cc.spawn(cc.rotateTo(time, -15),\n			cc.moveTo(time, cc.pAdd(@block.getPosition(), cc.p(0, 70)))\n			), cc.callFunc ()=>\n				#cc.log 'cc.callFunc'\n				@block.state = BlockState.DOWN\n				@block.runAction(cc.rotateTo(time, 15))\n				@time = 0\n\n		@block.runAction @action\n\n	onEnter: ()->\n		@_super()\n		@scheduleUpdate()\n		if cc.audioEngine.preloadEffect\n			cc.log 'preload effect'\n			cc.audioEngine.preloadEffect \"res/touch.mp3\" \n			cc.audioEngine.preloadEffect \"res/score.mp3\"\n\n	onExit: ()->\n		cc.log 'onExit'\n		Block.cleanCache()\n		Column.cleanCache()\n		Brick.cleanCache()\n		if cc.sys.isNative\n			jsb.reflection.callStaticMethod G.JAVA_CLASS,\n				\"hideBannerAd\", \"()V\"\n			jsb.reflection.callStaticMethod G.JAVA_CLASS,\n				\"hideSpotAd\", \"()V\"\n		@_super()\n\n	update: (dt)->\n		# if cc.sys.os is cc.sys.OS_ANDROID\n		#  	cc.audioEngine.playEffect \"res/touch.mp3\"\n		@_gameTime += dt\n		if not @_gameOver\n			@_moveCloudLayer(dt)\n			@_moveColumn(dt)\n			@_addColumn(dt)\n			@_moveBrick(dt)\n			@_addBrick(dt)\n			@_updateBlock(dt)\n			@_checkIsCollide(dt)\n		else\n			@unscheduleUpdate()\n\n	_moveCloudLayer: (dt)->\n		@cloud1.x -= G.MOVE_INTERVAL * dt\n		@cloud2.x -= G.MOVE_INTERVAL * dt\n		if @cloud1.x + @cloud1.width < 0\n			@cloud1.x = @cloud1.width\n			@cloud2.x = 0\n		if @cloud2.x + @cloud2.width < 0\n			@cloud2.x = @cloud2.width\n			@cloud1.x = 0\n		\n		return 0\n\n	_moveColumn: (dt)->\n		@columnLayer.x = @columnLayer.x - G.MOVE_INTERVAL * dt\n		if @_columns.length > 0\n			pos = @columnLayer.convertToWorldSpace @_columns[0].getPosition()\n			if pos.x + @_columns[0].width / 2 < 0\n				@_columns[0].destroy()\n				@_columnNum--\n				@_columns.shift()\n\n	_addColumn: (dt)->\n		if @_columnNum < G.ColumnNum\n			type = getRandomInt 0, ColumnType.length\n			# 判断是否给之前颜色相同\n			if @_columnNum > 0 and ColumnType[type].id is @_columns[@_columnNum-1].type.id\n				@_addColumn()\n			else\n				column = Column.getOrCreate ColumnType[type]\n				size = column.getContentSize()\n				height = getRandomInt(0, size.height/2)\n				x = if @_columnNum > 0 then @_columns[@_columnNum-1].getPosition().x else -size.width # 最后的一个column的x坐标或者0\n\n				column.setPosition cc.p(x + size.width, height)\n				@_columns.push column\n				if not column.getParent()\n					@columnLayer.addChild column, 3\n				@_columnNum++\n				@_addColumn()\n\n	# 添加砖块\n	_addBrick: (dt)->\n		if @_bricks.length > G.BRICK_NUM\n			return\n		num = getRandomInt(0, 10)\n		cc.log num\n		if num < 3	\n			type = BrickType[getRandomInt(0, BrickType.length-1)]\n		else\n			type = BrickType[BrickType.length-1]\n		brick = Brick.getOrCreate(type)\n		pos = cc.p(@_winSize.width + 100, @_winSize.height * 0.7)\n		randomX = getRandomInt(200, 700)\n		randomY = getRandomInt(@_winSize.height/3, @_winSize.height * 0.9)\n		if @_bricks.length > 0\n			pos = @_bricks[@_bricks.length-1].getPosition()\n		pos.x += randomX\n		pos.y = randomY\n		brick.setPosition pos\n		if not brick.getParent()\n			@addChild brick\n		@_bricks.push brick\n\n	_moveBrick: (dt)->\n		for c in @_bricks\n			do(c)->\n				pos = c.getPosition()\n				c.setPosition cc.p(pos.x - G.MOVE_INTERVAL * dt, pos.y)\n\n		if @_bricks.length > 0 and @_bricks[0].getPosition().x + @_bricks[0].getContentSize().width/2 < 0\n			@_bricks[0].destroy()\n			@_bricks.shift()\n\n	_updateBlock: (dt)->\n		if @block.invincible\n			@_invincibleTime += dt\n			if @_invincibleTime > G.INVINCIBLE_TIME\n				@block.opacity = 255\n				@block.invincible = false\n			else\n				if not @block.isFadein\n					@block.opacity = if @block.opacity - 10 < 100 then 100 else @block.opacity -= 10\n					@block.isFadein = true if @block.opacity is 100\n				else\n					@block.opacity = if @block.opacity + 10 > 255 then 255 else @block.opacity += 10\n					@block.isFadein = false if @block.opacity is 255\n		if @block.state is BlockState.NONE\n			return\n		else if @block.state is BlockState.DOWN\n			@time += dt\n			v = @v0 + @a * @time * G.PTM_RATIO\n			@block.setPosition cc.pSub @block.getPosition(), cc.p(0, v * dt)\n			return\n\n	_checkIsCollide: (dt)->\n		column = null\n		pos = @block.getPosition()\n		blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);\n		for i in [0...@_columns.length]\n			column = @_columns[i]\n			rect = column.getBoundingBoxToWorld()\n			if cc.rectContainsPoint(rect, @block.getPosition()) or\n				cc.rectIntersectsRect(rect, blockRect)\n					cc.log \"碰撞啦\"\n					if @block.type.id isnt column.type.id\n						@_gameOver = true\n						@gameOver()\n					else\n						cc.log \"Bingo\"\n						cc.audioEngine.playEffect 'res/score.mp3'\n						x = column.x\n						y = column.y + 20\n						Effect.columnCollEffect @columnLayer, cc.p(x, y)\n						@_score++\n						@_label.setString(@_score)\n						@block.destroy()\n						@_nextBlock()\n						columnPos = column.getPosition()\n						column.runAction cc.sequence(cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 20)),\n							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 15)),\n							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 10)),\n							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y + 5)),\n							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y - 3)),\n							cc.moveTo(0.02, cc.p(columnPos.x, columnPos.y)))\n					return\n		# 砖块的碰撞\n		if not @block.invincible\n			dis = @block.width\n			# cc.log \"dis #{dis}\"\n			for brick in @_bricks\n				do(brick)=>\n					if cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)\n						if brick.type.id is BrickType.length-1\n							@_gameOver = true\n							@gameOver()\n						else\n							changeType = getRandomInt(0, BlockType.length)\n							@block.changeType(BlockType[changeType])\n							@block.invincible = true\n							@_invincibleTime = 0\n							brick.destroy()\n\n	_nextBlock: ()->\n		@_invincibleTime = 0\n		type = @_blockQueue.shift()\n		@_blockQueue.push BlockType[getRandomInt(0, BlockType.length)]\n		block = @block = Block.getOrCreate type\n		block.setPosition @_winSize.width/2, @_winSize.height\n		block.state = BlockState.DOWN\n		@time = 0\n		if not block.getParent()\n			@addChild block, 2\n\n	gameOver: ()->\n		@scoreBoard.runAction cc.sequence cc.delayTime(0.2),\n			cc.moveTo(0.3, cc.p(@_winSize.width/2, @_winSize.height*0.65))\n\n		@againBtn.runAction cc.sequence cc.delayTime(0.5),\n			cc.moveTo(0.3, cc.p(@_winSize.width * 0.3, @_winSize.height*0.45))\n\n		@shareBtn.runAction cc.sequence cc.delayTime(0.5),\n			cc.moveTo(0.3, cc.p(@_winSize.width*0.7, @_winSize.height*0.45))\n\n		bestScore = cc.sys.localStorage.getItem(\"best\") or 0\n		cc.log bestScore\n		if @_score > bestScore \n			cc.log '新纪录'\n			cc.sys.localStorage.setItem(\"best\", @_score)\n\n		@_label.visible = false\n		scoreLabel = new cc.LabelBMFont(\"#{@_score}\",  \"res/font.fnt\");\n		scoreLabel.x = 170\n		scoreLabel.y = 115\n		scoreLabel.anchorX = 0\n		@scoreBoard.addChild scoreLabel\n\n		timeLabel = new cc.LabelBMFont(formatTime(@_gameTime), \"res/font.fnt\")\n		timeLabel.x = 170\n		timeLabel.y = 45\n		timeLabel.anchorX = 0\n		@scoreBoard.addChild timeLabel\n		if cc.sys.isNative\n			jsb.reflection.callStaticMethod G.JAVA_CLASS,\n				\"showBannerAd\", \"()V\"\n			jsb.reflection.callStaticMethod G.JAVA_CLASS,\n				\"showSpotAd\", \"()V\"\n\n	takeScreenshot: ()->\n		cc.log 'takeScreenshot'\n		texture = new cc.RenderTexture @_winSize.width, @_winSize.height\n		texture.setPosition cc.p(@_winSize.width/2, @_winSize.height/2)\n		texture.begin()\n		cc.director.getRunningScene().visit()\n		texture.end()\n		texture.saveToFile(\"screenshot.png\", cc.IMAGE_FORMAT_PNG)\n		if cc.sys.isNative\n			jsb.reflection.callStaticMethod G.JAVA_CLASS,\n			\"share\", \"(Ljava/lang/String;)V\", \"我在玩空降小色块,成功解救了#{@_score}个小方块,麽麽哒~\"\n\n\nGameScene = cc.Scene.extend\n	onEnter: ()->\n		@_super()\n		layer = new GameLayer()\n		@addChild layer",
 			"file": "coffee/GameScene.coffee",
+			"file_size": 12569,
+			"file_write_time": 130648586170000000,
 			"settings":
 			{
-				"buffer_size": 12311,
+				"buffer_size": 12402,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "frameworks/js-bindings\nframeworks/runtime-src/proj.android/obj\nframeworks/runtime-src/proj.android/bin\nframeworks/runtime-src/proj.android/assets\nnode_modules/\ntools/\nruntime/\n\n\n.DS_Store",
+			"file": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+			"settings":
+			{
+				"buffer_size": 3303,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coffee/Resources.coffee",
+			"settings":
+			{
+				"buffer_size": 3232,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coffee/Effect.coffee",
+			"settings":
+			{
+				"buffer_size": 787,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coffee/GameObject/Brick.coffee",
+			"settings":
+			{
+				"buffer_size": 965,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coffee/Config/BrickType.coffee",
+			"settings":
+			{
+				"buffer_size": 90,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": ".gitignore",
-			"file_size": 186,
-			"file_write_time": 130630468490000000,
 			"settings":
 			{
 				"buffer_size": 187,
@@ -444,7 +488,14 @@
 	"expanded_folders":
 	[
 		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock",
-		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/coffee"
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android/libs/armeabi",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android/src",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android/src/org",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android/src/org/cocos2dx",
+		"/Users/eleven/projects/cocos2d-js-projects/FlyBlock/frameworks/runtime-src/proj.android/src/org/cocos2dx/javascript"
 	],
 	"file_history":
 	[
@@ -505,7 +556,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -595,15 +646,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12311,
+						"buffer_size": 12402,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6009,
-								6009
+								7731,
+								7731
 							]
 						],
 						"settings":
@@ -613,7 +664,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3325.0,
+						"translation.y": 3819.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -621,6 +672,158 @@
 				},
 				{
 					"buffer": 1,
+					"file": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1948,
+								2250
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 493.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "coffee/Resources.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3232,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3230,
+								3230
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 871.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "coffee/Effect.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 787,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								785,
+								785
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "coffee/GameObject/Brick.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 965,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								116,
+								116
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "coffee/Config/BrickType.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 90,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90,
+								90
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": ".gitignore",
 					"semi_transient": false,
 					"settings":
@@ -632,8 +835,8 @@
 						"selection":
 						[
 							[
-								0,
-								187
+								158,
+								160
 							]
 						],
 						"settings":
@@ -645,7 +848,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
