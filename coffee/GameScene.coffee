@@ -406,14 +406,14 @@ GameLayer = BaseLayer.extend
 
 		@_label.visible = false
 		scoreLabel = new cc.LabelBMFont("#{@_score}",  "res/font.fnt");
-		scoreLabel.x = 170
-		scoreLabel.y = 115
+		scoreLabel.x = 195
+		scoreLabel.y = 194
 		scoreLabel.anchorX = 0
 		@scoreBoard.addChild scoreLabel
 
 		timeLabel = new cc.LabelBMFont(formatTime(@_gameTime), "res/font.fnt")
-		timeLabel.x = 170
-		timeLabel.y = 45
+		timeLabel.x = 195
+		timeLabel.y = 88
 		timeLabel.anchorX = 0
 		@scoreBoard.addChild timeLabel
 		if cc.sys.isNative

@@ -7,7 +7,7 @@ StartLayer = BaseLayer.extend({
   rateBtn: null,
   ctor: function() {
     this._super();
-    this.setBackground("res/start_page.png");
+    this.setBackground("res/start_page.jpg");
     if (cc.sys.capabilities.hasOwnProperty("keyboard")) {
       cc.eventManager.addListener({
         event: cc.EventListener.KEYBOARD,
@@ -24,8 +24,8 @@ StartLayer = BaseLayer.extend({
     }
     this.addButton({
       normalImage: "res/start_btn.png",
-      x: this._winSize.width * 0.8,
-      y: this._winSize.height * 0.3,
+      x: this._winSize.width * 0.5,
+      y: this._winSize.height * 0.5,
       callback: function(sender, type) {
         switch (type) {
           case ccui.Widget.TOUCH_ENDED:
@@ -40,8 +40,8 @@ StartLayer = BaseLayer.extend({
     });
     this.addButton({
       normalImage: "res/teach_btn.png",
-      x: this._winSize.width * 0.7,
-      y: this._winSize.height * 0.2,
+      x: this._winSize.width * 0.5,
+      y: this._winSize.height * 0.35,
       callback: function(sender, type) {
         switch (type) {
           case ccui.Widget.TOUCH_ENDED:

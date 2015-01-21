@@ -5,7 +5,7 @@ StartLayer = BaseLayer.extend
 	rateBtn: null
 	ctor: ()->
 		@_super()
-		@setBackground("res/start_page.png")
+		@setBackground("res/start_page.jpg")
 
 		# startBtn = @startBtn = new ccui.Button()
 		# startBtn.setTouchEnabled(true)
@@ -34,8 +34,8 @@ StartLayer = BaseLayer.extend
 
 		@addButton
 			normalImage: "res/start_btn.png"
-			x: @_winSize.width * 0.8
-			y: @_winSize.height * 0.3
+			x: @_winSize.width * 0.5
+			y: @_winSize.height * 0.5
 			callback: (sender, type)->
 				switch type
 					when ccui.Widget.TOUCH_ENDED
@@ -47,8 +47,8 @@ StartLayer = BaseLayer.extend
 			target: @
 		@addButton
 			normalImage: "res/teach_btn.png"
-			x: @_winSize.width * 0.7
-			y: @_winSize.height * 0.2
+			x: @_winSize.width * 0.5
+			y: @_winSize.height * 0.35
 			callback: (sender, type)->
 				switch type
 					when ccui.Widget.TOUCH_ENDED

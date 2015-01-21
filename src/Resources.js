@@ -4,7 +4,7 @@ res = {
   HelloWorld_png: "res/HelloWorld.png",
   CloseNormal_png: "res/CloseNormal.png",
   CloseSelected_png: "res/CloseSelected.png",
-  start_page_bg: "res/start_page_bg.png",
+  start_page_bg: "res/start_page.jpg",
   level_bg1: "res/level_bg1.png",
   level_bg2: "res/level_bg2.png",
   level_bg3: "res/level_bg3.png",

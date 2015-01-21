@@ -422,13 +422,13 @@ GameLayer = BaseLayer.extend({
     }
     this._label.visible = false;
     scoreLabel = new cc.LabelBMFont("" + this._score, "res/font.fnt");
-    scoreLabel.x = 170;
-    scoreLabel.y = 115;
+    scoreLabel.x = 195;
+    scoreLabel.y = 194;
     scoreLabel.anchorX = 0;
     this.scoreBoard.addChild(scoreLabel);
     timeLabel = new cc.LabelBMFont(formatTime(this._gameTime), "res/font.fnt");
-    timeLabel.x = 170;
-    timeLabel.y = 45;
+    timeLabel.x = 195;
+    timeLabel.y = 88;
     timeLabel.anchorX = 0;
     this.scoreBoard.addChild(timeLabel);
     if (cc.sys.isNative) {
