@@ -20,7 +20,6 @@ GameLayer = BaseLayer.extend
 		@_gameTime = 0
 		@_invincibleTime = 0
 		@_gameOver = false
-		@_blockQueue = []
 		@_bricks = [] # 砖块
 		@_floatBlocks = [] # 漂浮方块
 
@@ -97,9 +96,6 @@ GameLayer = BaseLayer.extend
 		@addChild @bestLabel
 
 		# 方块
-		for i in [0...5]
-			@_blockQueue.push(BlockType[getRandomInt(0, BlockType.length)])
-
 		blockType = BlockType[getRandomInt(0, BlockType.length)]
 		block = @block = Block.getOrCreate blockType
 		block.attr
@@ -175,6 +171,8 @@ GameLayer = BaseLayer.extend
 			cc.log 'preload effect'
 			cc.audioEngine.preloadEffect "res/touch.mp3" 
 			cc.audioEngine.preloadEffect "res/score.mp3"
+			cc.audioEngine.preloadEffect "res/hit.wav"
+			cc.audioEngine.preloadEffect "res/ling.wav"
 
 	onExit: ()->
 		cc.log 'onExit'
@@ -306,6 +304,7 @@ GameLayer = BaseLayer.extend
 				cc.rectIntersectsRect(rect, blockRect)
 					cc.log "碰撞啦"
 					if @block.type.id isnt column.type.id
+						cc.audioEngine.playEffect 'res/hit.wav'
 						@_gameOver = true
 						@gameOver()
 					else
@@ -324,9 +323,11 @@ GameLayer = BaseLayer.extend
 				do(brick)=>
 					if cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)
 						if brick.type.id is 8
+							cc.audioEngine.playEffect 'res/hit.wav'
 							@_gameOver = true
 							@gameOver()
 						else
+							cc.audioEngine.playEffect "res/ling.wav"
 							@block.changeType(BlockType[brick.type.id])
 							@block.invincible = true
 							@_invincibleTime = 0
@@ -334,11 +335,11 @@ GameLayer = BaseLayer.extend
 
 	_nextBlock: ()->
 		@_invincibleTime = 0
-		type = @_blockQueue.shift()
-		@_blockQueue.push BlockType[getRandomInt(0, BlockType.length)]
+		type =  BlockType[getRandomInt(0, BlockType.length)]
 		block = @block = Block.getOrCreate type
 		block.setPosition @_winSize.width/2, @_winSize.height
 		block.state = BlockState.DOWN
+		block.setRotation 15
 		@time = 0
 		if not block.getParent()
 			@addChild block, 2

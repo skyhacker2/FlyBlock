@@ -19,7 +19,6 @@ GameLayer = BaseLayer.extend({
     this._gameTime = 0;
     this._invincibleTime = 0;
     this._gameOver = false;
-    this._blockQueue = [];
     this._bricks = [];
     this._floatBlocks = [];
     this._bgIndex = getRandomInt(0, this._bgNum);
@@ -65,7 +64,7 @@ GameLayer = BaseLayer.extend({
     }
   },
   createUI: function() {
-    var againBtn, bestScore, block, blockType, board, cloud, cloudLayer, i, shareBtn, w, _i, _j;
+    var againBtn, bestScore, block, blockType, board, cloud, cloudLayer, i, shareBtn, w, _i;
     w = 0;
     for (i = _i = 0; _i <= 1; i = ++_i) {
       cloudLayer = new cc.Layer();
@@ -99,9 +98,6 @@ GameLayer = BaseLayer.extend({
       y: this._winSize.height - 40
     });
     this.addChild(this.bestLabel);
-    for (i = _j = 0; _j < 5; i = ++_j) {
-      this._blockQueue.push(BlockType[getRandomInt(0, BlockType.length)]);
-    }
     blockType = BlockType[getRandomInt(0, BlockType.length)];
     block = this.block = Block.getOrCreate(blockType);
     block.attr({
@@ -181,7 +177,9 @@ GameLayer = BaseLayer.extend({
     if (cc.audioEngine.preloadEffect) {
       cc.log('preload effect');
       cc.audioEngine.preloadEffect("res/touch.mp3");
-      return cc.audioEngine.preloadEffect("res/score.mp3");
+      cc.audioEngine.preloadEffect("res/score.mp3");
+      cc.audioEngine.preloadEffect("res/hit.wav");
+      return cc.audioEngine.preloadEffect("res/ling.wav");
     }
   },
   onExit: function() {
@@ -348,6 +346,7 @@ GameLayer = BaseLayer.extend({
       if (cc.rectContainsPoint(rect, this.block.getPosition()) || cc.rectIntersectsRect(rect, blockRect)) {
         cc.log("碰撞啦");
         if (this.block.type.id !== column.type.id) {
+          cc.audioEngine.playEffect('res/hit.wav');
           this._gameOver = true;
           this.gameOver();
         } else {
@@ -371,9 +370,11 @@ GameLayer = BaseLayer.extend({
           return function(brick) {
             if (cc.rectIntersectsRect(brick.getBoundingBox(), blockRect)) {
               if (brick.type.id === 8) {
+                cc.audioEngine.playEffect('res/hit.wav');
                 _this._gameOver = true;
                 return _this.gameOver();
               } else {
+                cc.audioEngine.playEffect("res/ling.wav");
                 _this.block.changeType(BlockType[brick.type.id]);
                 _this.block.invincible = true;
                 _this._invincibleTime = 0;
@@ -389,11 +390,11 @@ GameLayer = BaseLayer.extend({
   _nextBlock: function() {
     var block, type;
     this._invincibleTime = 0;
-    type = this._blockQueue.shift();
-    this._blockQueue.push(BlockType[getRandomInt(0, BlockType.length)]);
+    type = BlockType[getRandomInt(0, BlockType.length)];
     block = this.block = Block.getOrCreate(type);
     block.setPosition(this._winSize.width / 2, this._winSize.height);
     block.state = BlockState.DOWN;
+    block.setRotation(15);
     this.time = 0;
     if (!block.getParent()) {
       return this.addChild(block, 2);
