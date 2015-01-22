@@ -36,7 +36,8 @@ StartLayer = BaseLayer.extend({
             }, this);
         }
       },
-      target: this
+      target: this,
+      delay: 0
     });
     this.addButton({
       normalImage: "res/teach_btn.png",
@@ -50,7 +51,8 @@ StartLayer = BaseLayer.extend({
             }, this);
         }
       },
-      target: this
+      target: this,
+      delay: 0.2
     });
     if (cc.sys.isNative) {
       return this.addButton({
@@ -68,7 +70,7 @@ StartLayer = BaseLayer.extend({
     }
   },
   addButton: function(opt) {
-    var button;
+    var button, delay, scaleTo1, scaleTo2, scaleTo3, scaleTo4;
     cc.log('addButton');
     button = new ccui.Button();
     button.loadTextureNormal(opt.normalImage);
@@ -79,7 +81,14 @@ StartLayer = BaseLayer.extend({
     if (opt.callback) {
       button.addTouchEventListener(opt.callback, opt.target);
     }
-    return this.addChild(button);
+    this.addChild(button);
+    button.setScale(0);
+    scaleTo1 = cc.scaleTo(0.1, 1.2);
+    scaleTo2 = cc.scaleTo(0.08, 0.9);
+    scaleTo3 = cc.scaleTo(0.08, 1.1);
+    scaleTo4 = cc.scaleTo(0.08, 1);
+    delay = cc.delayTime(opt.delay);
+    return button.runAction(cc.sequence(delay, scaleTo1, scaleTo2, scaleTo3, scaleTo4));
   }
 });
 

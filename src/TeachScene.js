@@ -8,7 +8,7 @@ TeachLayer = BaseLayer.extend({
     this._super();
     this.index = 0;
     pos = cc.p(this._winSize.width / 2, this._winSize.height / 2);
-    for (i = _i = 1; _i <= 8; i = ++_i) {
+    for (i = _i = 1; _i <= 7; i = ++_i) {
       sprite = new cc.Sprite("res/teach" + i + ".png");
       sprite.setPosition(pos);
       this.teachSprites.push(sprite);

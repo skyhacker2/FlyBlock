@@ -54,7 +54,7 @@ cc.game.onStart = function(){
         var browser = Wtk.browser;
         if (browser.isAndroid || browser.isIOS) {
             cc.log("手机浏览器");
-            cc.view.enableAutoFullScreen(true); // 是否自动全屏
+            cc.view.enableAutoFullScreen(false); // 是否自动全屏
             cc.view.setDesignResolutionSize(640, 1136, cc.ResolutionPolicy.FIXED_WIDTH);
         } else {
             cc.log("PC浏览器");

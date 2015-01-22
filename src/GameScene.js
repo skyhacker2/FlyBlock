@@ -19,6 +19,7 @@ GameLayer = BaseLayer.extend({
     cc.spriteFrameCache.addSpriteFrames("res/brick.plist");
     cc.spriteFrameCache.addSpriteFrames("res/column_coll_effect.plist");
     cc.spriteFrameCache.addSpriteFrames("res/bianse.plist");
+    cc.spriteFrameCache.addSpriteFrames("res/dead.plist");
     this._bgIndex = 0;
     this._cloudLayers = [];
     this._columns = [];
@@ -411,6 +412,8 @@ GameLayer = BaseLayer.extend({
   },
   gameOver: function() {
     var bestScore, scoreLabel, timeLabel;
+    this.block.visible = false;
+    Effect.deadEffect(this, this.block.getPosition());
     this.scoreBoard.runAction(cc.sequence(cc.delayTime(0.2), cc.moveTo(0.3, cc.p(this._winSize.width / 2, this._winSize.height * 0.65))));
     this.againBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.3, this._winSize.height * 0.45))));
     this.shareBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.7, this._winSize.height * 0.45))));

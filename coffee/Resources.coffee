@@ -63,6 +63,8 @@ res =
 	column_coll_effect_plist: "res/column_coll_effect.plist"
 	bianse_plist: "res/bianse.plist"
 	bianse: "res/bianse.png"
+	dead_plist: "res/dead.plist"
+	dead_png: "res/dead.png"
 
 
 g_resources = []
@@ -131,5 +133,7 @@ g_gameScene = [
 	res.column_coll_effect,
 	res.column_coll_effect_plist,
 	res.bianse,
-	res.bianse_plist
+	res.bianse_plist,
+	res.dead_png,
+	res.dead_plist
 ]

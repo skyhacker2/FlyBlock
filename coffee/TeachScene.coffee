@@ -7,7 +7,7 @@ TeachLayer = BaseLayer.extend
 		@_super()
 		@index = 0
 		pos = cc.p(@_winSize.width/2, @_winSize.height/2)
-		for i in [1..8]
+		for i in [1..7]
 			sprite = new cc.Sprite "res/teach#{i}.png"
 			sprite.setPosition pos
 			@teachSprites.push sprite

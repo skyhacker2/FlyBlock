@@ -7,20 +7,6 @@ StartLayer = BaseLayer.extend
 		@_super()
 		@setBackground("res/start_page.jpg")
 
-		# startBtn = @startBtn = new ccui.Button()
-		# startBtn.setTouchEnabled(true)
-		# startBtn.setPressedActionEnabled(true)
-		# startBtn.loadTextures("res/start_btn.png")
-		# startBtn.x = @_winSize.width * 0.8
-		# startBtn.y = @_winSize.height * 0.3
-		# startBtn.addTouchEventListener (sender, type)=>
-		# 	switch type
-		# 		when ccui.Widget.TOUCH_ENDED
-		# 			MyLoaderScene.preload g_gameScene, ()->
-		# 				cc.director.runScene new GameScene()
-		# , @
-		# @addChild startBtn
-
 		if cc.sys.capabilities.hasOwnProperty "keyboard"
 			cc.eventManager.addListener
 				event: cc.EventListener.KEYBOARD
@@ -45,6 +31,7 @@ StartLayer = BaseLayer.extend
 							cc.director.runScene new GameScene()
 						, @
 			target: @
+			delay: 0
 		@addButton
 			normalImage: "res/teach_btn.png"
 			x: @_winSize.width * 0.5
@@ -56,6 +43,7 @@ StartLayer = BaseLayer.extend
 							cc.director.runScene new TeachScene()
 						, @
 			target: @
+			delay: 0.2
 
 		if cc.sys.isNative
 			@addButton
@@ -81,6 +69,14 @@ StartLayer = BaseLayer.extend
 		button.y = opt.y or 0
 		button.addTouchEventListener opt.callback, opt.target if opt.callback
 		@addChild button
+		button.setScale 0 # 缩小
+		# 放大动画
+		scaleTo1 = cc.scaleTo 0.1, 1.2
+		scaleTo2 = cc.scaleTo 0.08, 0.9
+		scaleTo3 = cc.scaleTo 0.08, 1.1
+		scaleTo4 = cc.scaleTo 0.08, 1
+		delay = cc.delayTime opt.delay
+		button.runAction cc.sequence(delay, scaleTo1, scaleTo2, scaleTo3, scaleTo4)
 
 
 

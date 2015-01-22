@@ -20,6 +20,7 @@ GameLayer = BaseLayer.extend
 		cc.spriteFrameCache.addSpriteFrames "res/brick.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/column_coll_effect.plist"
 		cc.spriteFrameCache.addSpriteFrames "res/bianse.plist"
+		cc.spriteFrameCache.addSpriteFrames "res/dead.plist"
 		
 		@_bgIndex = 0
 		@_cloudLayers = []
@@ -389,6 +390,9 @@ GameLayer = BaseLayer.extend
 			@addChild block, 2
 
 	gameOver: ()->
+		#播放死亡动画
+		@block.visible = false
+		Effect.deadEffect @, @block.getPosition()
 		@scoreBoard.runAction cc.sequence cc.delayTime(0.2),
 			cc.moveTo(0.3, cc.p(@_winSize.width/2, @_winSize.height*0.65))
 

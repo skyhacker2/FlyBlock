@@ -22,4 +22,26 @@ Effect.columnCollEffect = (target, pos)->
     action = cc.sequence animate, onComplete
     effect.runAction action
 
+Effect.deadEffect = (target, pos)->
+    effect = new cc.Sprite "#juese0001.png"
+    animation = cc.animationCache.getAnimation "DeadEffect"
+    if not animation
+        aniFrames = []
+        str = ""
+        for i in [1..6]
+            str = "juese00" + (if i < 10 then "0#{i}" else i) + ".png"
+            frame = cc.spriteFrameCache.getSpriteFrame str
+            aniFrames.push frame
+        animation = new cc.Animation aniFrames, 1.0 / 24.0
+        cc.animationCache.addAnimation "DeadEffect"
+    animate = new cc.Animate animation
+    target.addChild effect
+    effect.setPosition pos
+
+    onComplete = cc.callFunc ()->
+        @.parent.removeChild @, true
+    , effect
+
+    action = cc.sequence animate, onComplete
+    effect.runAction action
 
