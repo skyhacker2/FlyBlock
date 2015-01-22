@@ -208,6 +208,8 @@ GameLayer = BaseLayer.extend
 			cc.log 'preload effect'
 			cc.audioEngine.preloadEffect "res/touch.mp3" 
 			cc.audioEngine.preloadEffect "res/score.mp3"
+			cc.audioEngine.preloadEffect "res/hit.wav"
+			cc.audioEngine.preloadEffect "res/ling.wav"
 
 	onExit: ()->
 		cc.log 'onExit'
@@ -333,7 +335,7 @@ GameLayer = BaseLayer.extend
 	_checkIsCollide: (dt)->
 		column = null
 		pos = @block.getPosition()
-		blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
+		blockRect = cc.rect(pos.x - 40, pos.y - 40, 80, 70);
 		for i in [0...@_columns.length]
 			column = @_columns[i]
 			rect = column.getBoundingBoxToWorld()
@@ -372,6 +374,7 @@ GameLayer = BaseLayer.extend
 							@_gameOver = true
 							@gameOver()
 						else
+							cc.audioEngine.playEffect "res/ling.wav"
 							changeType = getRandomInt(0, BlockType.length)
 							@block.changeType(BlockType[changeType])
 							@block.invincible = true
@@ -393,6 +396,9 @@ GameLayer = BaseLayer.extend
 		#播放死亡动画
 		@block.visible = false
 		Effect.deadEffect @, @block.getPosition()
+
+		cc.audioEngine.playEffect "res/hit.wav"
+
 		@scoreBoard.runAction cc.sequence cc.delayTime(0.2),
 			cc.moveTo(0.3, cc.p(@_winSize.width/2, @_winSize.height*0.65))
 

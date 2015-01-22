@@ -194,7 +194,9 @@ GameLayer = BaseLayer.extend({
     if (cc.audioEngine.preloadEffect) {
       cc.log('preload effect');
       cc.audioEngine.preloadEffect("res/touch.mp3");
-      return cc.audioEngine.preloadEffect("res/score.mp3");
+      cc.audioEngine.preloadEffect("res/score.mp3");
+      cc.audioEngine.preloadEffect("res/hit.wav");
+      return cc.audioEngine.preloadEffect("res/ling.wav");
     }
   },
   onExit: function() {
@@ -345,7 +347,7 @@ GameLayer = BaseLayer.extend({
     var blockRect, brick, column, columnPos, dis, i, pos, rect, x, y, _i, _j, _len, _ref, _ref1, _results;
     column = null;
     pos = this.block.getPosition();
-    blockRect = cc.rect(pos.x - 40, pos.y - 40, 90, 90);
+    blockRect = cc.rect(pos.x - 40, pos.y - 40, 80, 70);
     for (i = _i = 0, _ref = this._columns.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
       column = this._columns[i];
       rect = column.getBoundingBoxToWorld();
@@ -384,6 +386,7 @@ GameLayer = BaseLayer.extend({
                 _this._gameOver = true;
                 return _this.gameOver();
               } else {
+                cc.audioEngine.playEffect("res/ling.wav");
                 changeType = getRandomInt(0, BlockType.length);
                 _this.block.changeType(BlockType[changeType]);
                 _this.block.invincible = true;
@@ -414,6 +417,7 @@ GameLayer = BaseLayer.extend({
     var bestScore, scoreLabel, timeLabel;
     this.block.visible = false;
     Effect.deadEffect(this, this.block.getPosition());
+    cc.audioEngine.playEffect("res/hit.wav");
     this.scoreBoard.runAction(cc.sequence(cc.delayTime(0.2), cc.moveTo(0.3, cc.p(this._winSize.width / 2, this._winSize.height * 0.65))));
     this.againBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.3, this._winSize.height * 0.45))));
     this.shareBtn.runAction(cc.sequence(cc.delayTime(0.5), cc.moveTo(0.3, cc.p(this._winSize.width * 0.7, this._winSize.height * 0.45))));
